@@ -22,14 +22,14 @@
         <div class="w-full">
             <div class="space-y-6">
                 <div class="bg-gray-100 border border-gray-200 rounded-2xl p-6">
-                    <pre class="text-base leading-relaxed text-gray-700"><code># Get absolute paths for files
+                    <pre class="leading-relaxed text-gray-700"><code># Get absolute paths for files
 $ realpath [file1] [file2]</code></pre>
                 </div>
 
                 <div class="text-sm text-gray-500">Emacs helper functions:</div>
 
                 <div class="bg-gray-100 border border-gray-200 rounded-2xl p-6">
-                    <pre class="text-sm leading-relaxed text-gray-700"><code>(defun rk-realpath ()
+                    <pre class="leading-relaxed text-gray-700"><code>(defun rk-realpath ()
   "Copy full path of current buffer"
   (interactive)
   (kill-new (buffer-file-name))

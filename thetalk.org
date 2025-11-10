@@ -7,33 +7,49 @@
 #+end_src
 *** Tooling
 
+* Getting started
+$ npm install -g @anthropic-ai/claude-code
+$ claude
+
 * Documentation
 ** CLAUDE.md
-** llm/myapp.md
+- Apps
+- Tech Stack
+- Terminology
+- Deprecated apps
+- Makefile, Tests, management commands
+** llm/ folder with project-specific docs
 
-* Building a feature
+* Building a Feature
 ** Exploration and Research
 *** Talk
 - Make Claude use a lot of tokens
 - Great way to refresh own understanding
 - Follow up for additional details
 - Stepwise approach makes for good todo items
+
 *** Claude
 #+begin_src markdown
-Hi Claude, lets start out by researching how [topic] works in the system. First read the current issue in [project management tool] and any referenced emails as well as any relevant docs in the @llm folder. Then read these files in full:
+Hi Claude, let's start by researching how [TOPIC] works in the system.
 
-- @src/apps.py
-- @src/urls.py
+First read:
+- The current issue in [PROJECT MANAGEMENT TOOL]
+- Any referenced emails
+- Relevant documentation in the @llm folder
 
-After that reference relevant classes in /home/r/ws/2025-claude-code-ida/myproject/src/longfile.py and do addtional relevant research.
+Then read these core files in full:
+- @[FILE_1]
+- @[FILE_2]
 
-Finally summarize your findings.
+After that, reference relevant classes in [LONG_FILE] and do additional research as needed.
+
+Finally, summarize your findings.
 #+end_src
+
 *** Tooling
 #+begin_src bash
-$ realpath src/apps.py src/urls.py 
-/home/r/ws/2025-claude-code-ida/myproject/src/apps.py
-/home/r/ws/2025-claude-code-ida/myproject/src/urls.py
+# Get absolute paths for files
+$ realpath [file1] [file2]
 #+end_src
 
 #+begin_src elisp
@@ -54,7 +70,7 @@ $ realpath src/apps.py src/urls.py
                (path (buffer-file-name buffer)))
           (when path
             (push path paths)))))
-    
+
     ;; Create newline separated string and kill it
     (let ((paths-str (mapconcat #'identity (delete-dups (nreverse paths)) "\n")))
       (kill-new paths-str)
@@ -63,17 +79,181 @@ $ realpath src/apps.py src/urls.py
 
 ** Planning
 *** Talk
-- What
-- How
+- What are we building
+- How will we build it
+- Ask for questions and answer them
 - Don't use plan mode
 - "Don't code"
+
 *** Claude
 #+begin_src markdown
-Today we are building [feature], I'm thinking we are using this overall approach
+Today we are building [FEATURE]. I'm thinking we use this overall approach:
 
-- foo
-- bar
+- [STEP_1]
+- [STEP_2]
+- [STEP_3]
 
-Any questions? Feel free to do additional research.
+Any questions? Feel free to do additional research before we start coding.
 #+end_src
+
+#+begin_src markdown
+Great questions, I'm thinking the following:
+
+1. [ANSWER_1]
+2. [ANSWER_2]
+3. [ANSWER_3]
+
+Sounds good?
+#+end_src
+
+** Build the root
+*** Talk
+- Very precise language
+- Function names and definitions
+- Which files are we working in
+- We are building the foundational hard parts
+*** Claude
+#+begin_src markdown
+Let's build the core foundation. We'll work in these files:
+- [FILE_1]
+- [FILE_2]
+
+Create a function `[function_name]([param1]: [Type1], [param2]: [Type2]) -> [ReturnType]` that:
+1. [SPECIFIC_BEHAVIOR_1]
+2. [SPECIFIC_BEHAVIOR_2]
+3. [SPECIFIC_BEHAVIOR_3]
+
+Then add a class `[ClassName]` with these methods:
+- `[method1]()`: [PRECISE_DESCRIPTION]
+- `[method2]()`: [PRECISE_DESCRIPTION]
+
+Uh, and we'll need datastructures as well. Please suggest better names, labels and help texts for these before coding the solution.
+
+SomeClass:
+   [field1] - int
+   [field2] - text, nullable
+
+Use the pinspect tool to do adhoc checks of functionality as we go along.
+#+end_src
+
+*** Feel
+- I'm in control
+- I'm not suprised by the output
+- We have great input, so ofcourse we get great output
+- With the instructions given to the LLM I could build this
+
+** Build the leaves
+*** Talk
+- High-level requirements
+- Let Claude use its knowledge
+- Trust the LLM with implementation details
+- Great for boilerplate, UI, CRUD, admin interfaces
+- We know what we want, not how to build it
+
+*** Claude
+#+begin_src markdown
+Now let's add the admin interface for [MODEL_NAME]. It should have:
+- All the standard fields visible
+- Filters for [FIELD_1] and [FIELD_2]
+- Search functionality
+- The usual inline editing for related [RELATED_MODEL]
+
+Also add a [UI_COMPONENT] that displays [DATA] with sorting and pagination. Make it look good and follow the patterns used elsewhere in the project.
+#+end_src
+
+*** Feel
+- I'm delegating the details
+- Claude knows the conventions better than I do
+- I trust the output will be sensible
+- This is what LLMs are great at
+
+** Cleanup
+*** Talk
+- Remove LLM idioms and artifacts
+- Make code look human-written
+- Follow project conventions
+- This is professional polish
+
+*** Claude
+#+begin_src markdown
+Please clean up the code we just wrote:
+
+- Move all imports to the top of the file
+- Remove "before/after" style comments
+- Remove placeholder comments like "TODO" or "FIXME" that we've already implemented
+- Delete any commented-out old code
+- Remove overly verbose comments that explain obvious things
+- Consolidate any duplicate code
+- Make sure formatting matches the rest of the project
+
+Keep the code functionally identical, just make it look production-ready.
+#+end_src
+
+*** Feel
+- This makes it feel like my code
+- Ready to commit
+- No evidence of LLM artifacts
+
+** Ship It
+*** Talk
+- Commit, push, update tracking, communicate
+- Automate the ceremony
+- Close the loop with stakeholders
+- One command to finish everything
+
+*** Claude
+#+begin_src markdown
+Please commit and push the changes, then update [PROJECT_MANAGEMENT_TOOL] issue [ISSUE_ID] with the progress, and send a status email to [STAKEHOLDERS].
+
+For the issue update:
+- Mark the relevant tasks as complete
+- Add a comment summarizing what was implemented
+- Update the status if needed
+
+For the email:
+- Brief summary of what was done
+- Link to the commit/PR
+- Any relevant notes or next steps
+#+end_src
+
 *** Tooling
+#+begin_src bash
+# Automated commit, push, and communication
+clg() {
+    unset ANTHROPIC_API_KEY
+    claude -p -c "Your task is to commit and push ONLY the uncommitted changes in this git repository.
+
+CRITICAL: You do NOT have access to previous commits in your history. Some changes may already
+be committed. You must ONLY work with the uncommitted changes shown by 'git status' and 'git diff'.
+
+WORKFLOW:
+1. Run 'git status' to see what files are currently uncommitted (modified/added/deleted)
+2. Run 'git diff' to review the actual uncommitted changes
+3. Stage these uncommitted changes with 'git add'
+4. Create a commit with a single-line descriptive message based ONLY on the uncommitted changes
+5. Push the changes with 'git push'
+
+DO NOT reference or include already-committed changes in your commit message.
+DO NOT reference the current branch or issue number in the commit message
+
+After successfully completing all steps, output a brief success message and exit immediately.
+Do not wait for further instructions or ask any questions.
+
+IMPORTANT TOOL RESTRICTIONS:
+- You are ONLY allowed to use these tools:
+  * Bash(git status:*) - to check repository status
+  * Bash(git diff:*) - to view changes
+  * Bash(git add:*) - to stage files
+  * Bash(git commit:*) - to commit changes
+  * Bash(git push:*) - to push changes
+- You are NOT allowed to use any other tools including Read, Write, Edit, Grep, Glob, or any other Bash commands
+- Stay focused on the git workflow only" \
+    --allowedTools "Bash(git status:*)" "Bash(git diff:*)" "Bash(git add:*)" "Bash(git commit:*)" "Bash(git push:*)"
+}
+#+end_src
+
+*** Feel
+- Everything is wrapped up in one go
+- Stakeholders are informed
+- Ready to move to the next task
+- No manual ceremony
