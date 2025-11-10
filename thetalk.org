@@ -18,7 +18,29 @@ $ claude
 - llm/how_to_document_an_app.md
 - Code way too large to fit in a single context window
 ** Tooling
-CLAUDE: Research a repopacker and give example of how to pack each app in it's own markdown file. Then show an example of using claude -p to get it to generate a md file in the llm folder for each app. Then have it do research starting with the most important apps to add details about cross cutting concerns, etc.
+#+begin_src bash
+# Install repomix and generate documentation for each app
+$ npm install -g repomix
+
+$ for app in src/apps/*; do
+    appname=$(basename $app)
+    repomix --include "$app/**" --style markdown --output "packed-$appname.md"
+    claude -p -c "Read @packed-$appname.md and @llm/how_to_document_an_app.md then generate llm/$appname.md"
+  done
+#+end_src
+
+#+begin_src markdown
+# Interactive session to document cross-cutting concerns
+
+Claude, please read all the app documentation files in @llm/ and research the cross-cutting concerns:
+- How do apps integrate with each other?
+- What signals are sent/received?
+- What background tasks exist?
+- What are the permission models?
+- What external integrations are used?
+
+Then update each llm/[app].md file with these details.
+#+end_src
 
 * CLAUDE.md
 - Project description
@@ -28,6 +50,8 @@ CLAUDE: Research a repopacker and give example of how to pack each app in it's o
 - Terminology
 - Interesting makefile targets, tests and management commands
 - Memory
+
+! Don't use app specific CLAUDE.md files
 ** Tooling
 #+begin_src markdown
 Dear claude, please research how to create a CLAUDE.md file, then read all the files in the @llm folder in full and generate a CLAUDE.md for this project. I'm thinking this structure:
