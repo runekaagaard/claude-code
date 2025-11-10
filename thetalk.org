@@ -11,14 +11,32 @@
 $ npm install -g @anthropic-ai/claude-code
 $ claude
 
-* Documentation
-** CLAUDE.md
+* LLM agent documentation
+- Documentation of each app/module in the project
+- Cross cutting concerns
+- llm/[app1].md, etc.
+- llm/how_to_document_an_app.md
+- Code way too large to fit in a single context window
+** Tooling
+CLAUDE: Research a repopacker and give example of how to pack each app in it's own markdown file. Then show an example of using claude -p to get it to generate a md file in the llm folder for each app. Then have it do research starting with the most important apps to add details about cross cutting concerns, etc.
+
+* CLAUDE.md
+- Project description
 - Apps
+- Deprecated apps
 - Tech Stack
 - Terminology
-- Deprecated apps
-- Makefile, Tests, management commands
-** llm/ folder with project-specific docs
+- Interesting makefile targets, tests and management commands
+- Memory
+** Tooling
+#+begin_src markdown
+Dear claude, please research how to create a CLAUDE.md file, then read all the files in the @llm folder in full and generate a CLAUDE.md for this project. I'm thinking this structure:
+
+- Project description
+...
+
+Feel free to ask questions first.
+#+end_src
 
 * Building a Feature
 ** Exploration and Research
