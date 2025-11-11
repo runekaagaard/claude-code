@@ -11,12 +11,13 @@
 $ npm install -g @anthropic-ai/claude-code
 $ claude
 
-* LLM agent documentation
-- Documentation of each app/module in the project
-- Cross cutting concerns
-- llm/[app1].md, etc.
-- llm/how_to_document_an_app.md
-- Code way too large to fit in a single context window
+* Agent Documentation
+*** Talk
+- Codebase too large for context window
+- Create structured documentation in llm/ folder
+- Give each app/module its own .md file
+- Document cross-cutting concerns
+- Reference with @llm/topic.md
 ** Tooling
 #+begin_src bash
 # Install repomix and generate documentation for each app
@@ -66,9 +67,9 @@ Feel free to ask questions first.
 ** Exploration and Research
 *** Talk
 - Make Claude use a lot of tokens
-- Great way to refresh own understanding
+- Great way to refresh your own understanding
 - Follow up for additional details
-- Stepwise approach makes for good todo items
+- Stepwise approach makes good todo items
 
 *** Claude
 #+begin_src markdown
@@ -121,8 +122,8 @@ $ realpath [file1] [file2]
 
 ** Planning
 *** Talk
-- What are we building
-- How will we build it
+- What are we building?
+- How will we build it?
 - Ask for questions and answer them
 - Don't use plan mode
 - "Don't code"
@@ -148,7 +149,7 @@ Great questions, I'm thinking the following:
 Sounds good?
 #+end_src
 
-** Build the root
+** Build the Root
 *** Talk
 - Very precise language
 - Function names and definitions
@@ -180,11 +181,11 @@ Use the pinspect tool to do adhoc checks of functionality as we go along.
 
 *** Feel
 - I'm in control
-- I'm not suprised by the output
-- We have great input, so ofcourse we get great output
-- With the instructions given to the LLM I could build this
+- I'm not surprised by the output
+- Great input → Great output
+- With these instructions, I could build this
 
-** Build the leaves
+** Build the Leaves
 *** Talk
 - High-level requirements
 - Let Claude use its knowledge
