@@ -61,31 +61,33 @@
 </script>
 
 
-<!-- Two Column Layout -->
-<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
-    <!-- Left Sidebar: Title -->
-    <div class="pt-4">
-        <div class="space-y-3">
-            <h1 class="text-4xl font-bold text-gray-900 leading-tight">Documentation</h1>
-            
-            <h2 class="text-xl text-gray-500 font-medium">CLAUDE.md</h2>
-            
-        </div>
-    </div>
-
-    <!-- Right Content Area -->
-    <div class="pt-4">
-        <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            
-            <p>Project instructions that persists across sessions</p>
-            
-            <p>Tech stack, modules, conventions, where to find things</p>
-            
-            <p>Don't use directory CLAUDE.md's</p>
-            
-        </div>
-    </div>
-</div>
+<!--#include virtual="_slide-grid-start.html" -->
+            <h1 class="text-4xl font-bold text-gray-900 leading-tight">/issue command</h1>
+<!--#include virtual="_slide-grid-middle.html" -->
+            <div class="grid grid-cols-4 gap-3">
+                
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                    <h3 class="font-bold text-base text-claude-orange mb-1">Issue #[NUM]</h3>
+                    <div class="text-xs text-gray-600">[TITLE]</div>
+                </div>
+                
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                    <h3 class="font-bold text-base text-claude-orange mb-1">Branch</h3>
+                    <div class="text-xs text-gray-600">[BRANCH_NAME]</div>
+                </div>
+                
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                    <h3 class="font-bold text-base text-claude-orange mb-1">PR</h3>
+                    <div class="text-xs text-gray-600">[PR_URL]</div>
+                </div>
+                
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                    <h3 class="font-bold text-base text-claude-orange mb-1">Worktree</h3>
+                    <div class="text-xs text-gray-600">~/worktrees/[BRANCH_NAME]</div>
+                </div>
+                
+            </div>
+<!--#include virtual="_slide-grid-end.html" -->
 
 
     </div>

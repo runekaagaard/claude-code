@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Build presentation slides from thetalk.org
+Generic org-mode to HTML converter
 """
 import orgparse
 from pathlib import Path
@@ -11,53 +12,11 @@ import re
 def slugify(text):
     """Convert text to URL-friendly slug"""
     slug = text.lower()
-    # Remove special characters and brackets
     slug = re.sub(r'[\[\]/\(\):]', '', slug)
     slug = re.sub(r'[^\w\s-]', '', slug)
     slug = re.sub(r'\s+', '-', slug)
     slug = re.sub(r'-+', '-', slug)
     return slug.strip('-')
-
-
-def shorten_slug(section_slug, child_slug):
-    """Create a shortened slug for subsections"""
-    # Special cases for common abbreviations
-    abbreviations = {
-        'documentation': 'doc',
-        'dev-setup': 'dev',
-        'exploration': 'exploration',
-        'build-root': 'build-root',
-        'build-leaves': 'build-leaves',
-        'start-building': 'start-building',
-        'mcp-servers': 'mcp',
-    }
-
-    # Use abbreviation if available, otherwise use full section slug
-    prefix = abbreviations.get(section_slug, section_slug)
-
-    # For special cases, return exact filename
-    if section_slug == 'start-building' and 'issue' in child_slug:
-        return 'dev-issue-command'
-    if section_slug == 'dev-setup':
-        if 'create-worktree' in child_slug:
-            return 'dev-create-worktree'
-        if 'worktrees' in child_slug:
-            return 'dev-worktrees'
-        # Handle "Workspace Creation" subsection which needs special suffix handling
-        if 'workspace-creation' in child_slug and not child_slug.endswith('2'):
-            # Check if this should be the base name or -2
-            # If it's the first "Workspace Creation", add the suffix -2 based on position
-            pass  # Will handle below
-    if section_slug == 'exploration':
-        if 'prompt' in child_slug:
-            return 'exploration-prompt'
-        if 'realpath' in child_slug:
-            return 'exploration-tooling'
-
-    # Combine prefix with child slug
-    result = f"{prefix}-{child_slug}"
-
-    return result
 
 
 def extract_bullets(body):
@@ -90,8 +49,8 @@ def extract_code_blocks(body):
     return code_blocks
 
 
-def parse_batteries_items(body):
-    """Parse batteries section into 4x4 grid items"""
+def parse_grid_items(body):
+    """Parse grid items from body (format: - Name: Description)"""
     if not body:
         return []
 
@@ -120,9 +79,11 @@ def parse_org_file(org_path):
         if node.level == 1:
             heading = node.heading.strip()
 
-            # Handle CLAUDE markers
-            if '[CLAUDE:' in heading and 'Title type slide' in heading:
-                # Title slide
+            # Check for title slide marker
+            is_title_slide = '[CLAUDE:' in heading and 'title' in heading.lower()
+
+            if is_title_slide:
+                # Title slide from body content
                 if node.body:
                     body_lines = [line.strip() for line in node.body.strip().split('\n') if line.strip()]
                     if body_lines:
@@ -130,7 +91,7 @@ def parse_org_file(org_path):
                             'title': body_lines[0],
                             'subtitle': body_lines[1] if len(body_lines) > 1 else None,
                             'template': 'title',
-                            'filename': 'title.html' if not slides else 'getting-started.html',
+                            'filename': slugify(body_lines[0]) + '.html',
                         }
                         slides.append(slide)
                 continue
@@ -138,13 +99,10 @@ def parse_org_file(org_path):
             # Clean heading
             clean_heading = re.sub(r'\[CLAUDE:.*?\]', '', heading).strip()
             section_slug = slugify(clean_heading)
-
-            # Check if section has body content
             has_body = bool(node.body and node.body.strip())
 
-            # If section has body, create intro slide
+            # Section with body but no children
             if has_body and not node.children:
-                # Standalone section with no subsections
                 bullets = extract_bullets(node.body)
                 code_blocks = extract_code_blocks(node.body)
 
@@ -164,8 +122,8 @@ def parse_org_file(org_path):
                     }
                 slides.append(slide)
 
+            # Section with body AND children - create intro slide
             elif has_body and node.children:
-                # Section with body AND subsections - create intro slide
                 bullets = extract_bullets(node.body)
                 slide = {
                     'title': clean_heading,
@@ -183,69 +141,41 @@ def parse_org_file(org_path):
                         child_heading = child.heading.strip()
                         child_slug = slugify(child_heading)
 
-                        # Check for special batteries section
-                        if 'Batteries' in child_heading:
-                            items = parse_batteries_items(child.body)
-                            slide = {
-                                'title': child_heading,
-                                'items': items,
-                                'template': 'batteries',
-                                'filename': 'batteries.html',
-                            }
-                            slides.append(slide)
-                            is_first_child = False
-                            continue
-
                         # Determine filename
                         if not has_body and is_first_child:
-                            # First child of section without body uses section slug
+                            # First child of section without body uses parent slug
                             filename = f"{section_slug}.html"
                         else:
-                            # Other children use shortened prefix
-                            filename = f"{shorten_slug(section_slug, child_slug)}.html"
+                            # Other children combine parent and child slugs
+                            filename = f"{section_slug}-{child_slug}.html"
 
                         # Extract content
                         code_blocks = extract_code_blocks(child.body)
                         bullets = extract_bullets(child.body)
+                        grid_items = parse_grid_items(child.body)
 
-                        # Determine if multiple code blocks should be split into separate slides
-                        should_split_blocks = (
-                            ('prompt' in child_slug.lower() and section_slug == 'planning') or
-                            ('create-worktree' in child_slug.lower()) or
-                            ('workspace-creation' in child_slug.lower())
-                        )
-
-                        if code_blocks and len(code_blocks) > 1 and should_split_blocks:
-                            # Multiple code blocks - create one slide per block
+                        # Determine template
+                        if grid_items:
+                            # Grid layout
+                            slide = {
+                                'title': child_heading,
+                                'items': grid_items,
+                                'template': 'batteries',
+                                'filename': filename,
+                            }
+                            slides.append(slide)
+                        elif code_blocks and len(code_blocks) > 1:
+                            # Multiple code blocks - split into separate slides
                             for block_idx, code_block in enumerate(code_blocks):
-                                # Determine subtitle for each block
                                 if block_idx == 0:
-                                    block_subtitle = child_heading
                                     block_filename = filename
-                                elif block_idx == 1:
-                                    if 'prompt' in child_slug.lower():
-                                        block_subtitle = 'Follow-up Response'
-                                    else:
-                                        block_subtitle = child_heading
-                                    # Second block gets different filename
-                                    base = filename.replace('.html', '')
-                                    if base.endswith('-prompt'):
-                                        block_filename = base.replace('-prompt', '-response') + '.html'
-                                    elif 'create-worktree' in base:
-                                        block_filename = 'dev-workspace-creation.html'
-                                    else:
-                                        block_filename = f"{base}-2.html"
                                 else:
-                                    block_subtitle = child_heading
                                     base = filename.replace('.html', '')
-                                    if 'create-worktree' in base:
-                                        block_filename = 'dev-workspace-creation-2.html'
-                                    else:
-                                        block_filename = f"{base}-{block_idx + 1}.html"
+                                    block_filename = f"{base}-{block_idx + 1}.html"
 
                                 slide = {
                                     'title': clean_heading,
-                                    'subtitle': block_subtitle,
+                                    'subtitle': child_heading,
                                     'code_blocks': [code_block],
                                     'template': 'code',
                                     'filename': block_filename,
@@ -282,29 +212,23 @@ def build_slides(slides, output_dir):
     output_path = Path(output_dir)
     output_path.mkdir(exist_ok=True)
 
-    # Setup Jinja2
     env = Environment(loader=FileSystemLoader('templates'))
-
-    # Get filenames from slides
     filenames = [slide['filename'] for slide in slides]
 
-    # Generate each slide
     for i, slide in enumerate(slides):
         template = env.get_template(f"{slide['template']}.html")
 
-        # Add navigation
         slide['prev'] = filenames[i-1] if i > 0 else None
         slide['next'] = filenames[i+1] if i < len(filenames) - 1 else None
         slide['all_slides'] = filenames
 
-        # Render
         html = template.render(**slide)
         (output_path / slide['filename']).write_text(html)
 
     # Generate index
     index_template = env.get_template('index.html')
     index_html = index_template.render(
-        slides=[(s.get('title', 'Slide'), s['filename']) for s in slides],
+        slides=[(s.get('title', s.get('subtitle', 'Slide')), s['filename']) for s in slides],
         first_slide=filenames[0] if filenames else 'index.html'
     )
     (output_path / 'index.html').write_text(index_html)
@@ -321,7 +245,4 @@ def build_slides(slides, output_dir):
 if __name__ == '__main__':
     slides = parse_org_file('thetalk.org')
     filenames = build_slides(slides, 'build')
-    print(f"\nGenerated {len(filenames)} slides")
-    print("\nFilenames:")
-    for f in filenames:
-        print(f"  {f}")
+    print(f"Generated {len(filenames)} slides")
