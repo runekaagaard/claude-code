@@ -61,31 +61,10 @@
 </script>
 
 
-<!-- Two Column Layout -->
-<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
-    <!-- Left Sidebar -->
-    <div class="pt-4">
-        <div class="space-y-3">
-            <h1 class="text-4xl font-bold text-gray-900 leading-tight">Dev Setup</h1>
-            
-            <h2 class="text-xl text-gray-500 font-medium">Workspace Creation</h2>
-            
-        </div>
-    </div>
-
-    <!-- Right Content Area -->
-    <div class="pt-4">
-        <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <pre class="src src-bash">
-# Makefile
-worktree-setup-symlink:
-    ln -sf ~/main/node_modules .
-    ...
-</pre>
-<pre class="src src-bash">
-claude-terminator-workspace ~/worktrees/1234_mybranch/
-</pre>
-        </div>
+<div class="h-full flex flex-col items-center justify-center space-y-6">
+    <div class="bg-gray-100 border border-gray-200 rounded-2xl p-12">
+        <pre class="text-3xl leading-relaxed text-gray-800"><code>npm install -g @anthropic-ai/claude-code
+claude</code></pre>
     </div>
 </div>
 

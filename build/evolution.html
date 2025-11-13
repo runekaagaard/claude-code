@@ -43,7 +43,7 @@
 <!-- Navigation -->
 <nav id="slide-nav"></nav>
 <script>
-    const slides = ["claude-code-in-practice.html", "evolution.html", "about.html", "about-github.html", "about-talk.html", "npm-install-g-anthropic-aiclaude-code.html", "claude-code.html", "claude-code-batteries.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "exploration-realpath.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
+    const slides = ["claude-code-in-practice.html", "evolution.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "exploration-realpath.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
     const currentPage = location.pathname.split('/').pop();
     const idx = slides.indexOf(currentPage);
 
@@ -63,49 +63,46 @@
 
 <!-- Two Column Layout -->
 <div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
-    <!-- Left Sidebar -->
-    <div class="pt-4">
-        <div class="space-y-3">
-            <h1 class="text-4xl font-bold text-gray-900 leading-tight">Evolution</h1>
+    <!-- Left Sidebar: Title & Images -->
+    <div class="pt-4 space-y-6">
+        <h1 class="text-4xl font-bold text-gray-900 leading-tight">Evolution</h1>
+
+        
             
-        </div>
+            <div>
+                <img src="bowie-cutup.jpeg" alt="Bowie's Cut-Up Method, 1973" class="w-full h-auto rounded-lg shadow-lg border-2 border-gray-200">
+                <div class="text-sm text-gray-600 mt-2">
+                    
+                    <div class="font-medium">Bowie's Cut-Up Method, 1973</div>
+                    
+                    
+                </div>
+            </div>
+            
+            <div>
+                <img src="verbasizer.png" alt="And then I'll set it to Randomize." class="w-full h-auto rounded-lg shadow-lg border-2 border-gray-200">
+                <div class="text-sm text-gray-600 mt-2">
+                    
+                    <div class="font-medium">And then I'll set it to Randomize.</div>
+                    
+                    
+                    <div class="text-xs text-gray-500">Verbasizer, 1995</div>
+                    
+                </div>
+            </div>
+            
+        
     </div>
 
-    <!-- Right Content Area -->
+    <!-- Right Content Area: Timeline -->
     <div class="pt-4">
-        <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <ul>
-<li>
-<p>
-1920 Physical cut-up method with scissors
-</p>
-</li>
-<li>
-<p>
-1995 Verbasizer 2.0 digital randomization
-</p>
-</li>
-<li>
-<p>
-2019 AI Dungeon interactive text generation
-</p>
-</li>
-<li>
-<p>
-2022 ChatGPT browser-based prompting
-</p>
-</li>
-<li>
-<p>
-2024 Tools/MCP servers provide filesystem access
-</p>
-</li>
-<li>
-<p>
-2025 Agentic coding assistants with full workflow automation
-</p>
-</li>
-</ul>
+        <div class="space-y-4 text-2xl text-gray-700">
+            <div class="flex items-start gap-4"><span class="text-claude-orange font-bold min-w-[5rem]">1920s</span><p>Physical cut-up method with scissors</p></div>
+<div class="flex items-start gap-4"><span class="text-claude-orange font-bold min-w-[5rem]">1995</span><p>Verbasizer 2.0 digital randomization</p></div>
+<div class="flex items-start gap-4"><span class="text-claude-orange font-bold min-w-[5rem]">2019</span><p>AI Dungeon interactive text generation</p></div>
+<div class="flex items-start gap-4"><span class="text-claude-orange font-bold min-w-[5rem]">2022</span><p>ChatGPT browser-based prompting</p></div>
+<div class="flex items-start gap-4"><span class="text-claude-orange font-bold min-w-[5rem]">2024</span><p>Tools/MCP servers provide filesystem access</p></div>
+<div class="flex items-start gap-4"><span class="text-claude-orange font-bold min-w-[5rem]">2025</span><p>Agentic coding assistants with full workflow automation</p></div>
         </div>
     </div>
 </div>

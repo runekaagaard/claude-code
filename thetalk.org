@@ -3,15 +3,22 @@ Claude Code in Practice
 Making It Work on Large Projects
 
 * Evolution
-- 1920 Physical cut-up method with scissors
+:PROPERTIES:
+:TEMPLATE: evolution
+:IMAGES: bowie-cutup.jpeg|Bowie's Cut-Up Method, 1973;verbasizer.png|"And then I'll set it to Randomize."|Verbasizer, 1995
+:END:
+- 1920s Physical cut-up method with scissors
 - 1995 Verbasizer 2.0 digital randomization
 - 2019 AI Dungeon interactive text generation
 - 2022 ChatGPT browser-based prompting
 - 2024 Tools/MCP servers provide filesystem access
 - 2025 Agentic coding assistants with full workflow automation
 
-* About 
+* About
 ** Rune Kaagaard
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - CTO Prescriba
 - Psychological/Psychiatric services
 - 50.000 Clients/year
@@ -19,23 +26,37 @@ Making It Work on Large Projects
 - Dragør
 
 ** GitHub
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - https://github.com/runekaagaard
-- https://github.com/runekaagaard/mcp-alchemy - Relational Databases 
+- https://github.com/runekaagaard/mcp-alchemy - Relational Databases
 - https://github.com/runekaagaard/mcp-redmine) - Redmine Project Management
 - https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
 - hypergen.it - Django Liveview
 
 ** Talk
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Building features fast without losing control
 - MCP servers: Your tools become Claude's tools
 - Worktrees and workflows for parallel development
 - Root to leaves: Foundation first, details last
 
-* [CLAUDE: Title type slide]
+* Getting Started
+:PROPERTIES:
+:TEMPLATE: code_centered
+:END:
+#+begin_src bash
 npm install -g @anthropic-ai/claude-code
 claude
+#+end_src
 
 * Claude Code
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Agentic Code Editor
 - Command Line
 - Multimodal
@@ -44,7 +65,9 @@ claude
 - Hooks, Commands, Skills, Plugins
 
 ** Batteries
-[CLAUDE: make 4x4 cards of these]
+:PROPERTIES:
+:TEMPLATE: batteries
+:END:
 - Task: Launch specialized sub-agents for complex, multi-step autonomous work
 - Bash: Execute shell commands in persistent sessions for builds, tests, automation
 - Glob: Fast file pattern matching (e.g., **/*.js, src/**/*.ts)
@@ -63,6 +86,9 @@ claude
 - gh: Command line Github integration
 
 * MCP Servers
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Give Claude code access to all your stuff
 - Database, Browser Automation, Design tools, Messaging
 - Write your own!
@@ -132,6 +158,9 @@ if __name__ == "__main__":
 #+end_src
 
 ** Good Server
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - As few tools as possible
 - Add discoverability to existing programs
 - Don't change the documentation, just change the tool
@@ -157,11 +186,17 @@ if __name__ == "__main__":
 
 * Documentation
 ** CLAUDE.md
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Project instructions that persists across sessions
 - Tech stack, modules, conventions, where to find things
 - Don't use directory CLAUDE.md's
 
 ** LLM
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Full source too big for context
 - Document each app separately, then add cross cutting concerns
 - Module-specific documentation
@@ -190,6 +225,9 @@ Dear Claude:
 #+end_src
 
 * Dev Setup
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - What makes developers happy makes Claude effective
 - Fast dev environment creation
 - Local databases with real data
@@ -198,6 +236,9 @@ Dear Claude:
 - Branch name visible in UI
 
 ** Worktrees
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Claude Code conversations are directory specific
 - Worktrees over branch switching
 - Each task gets isolated directory
@@ -275,6 +316,9 @@ Please process these instructions: $ARGUMENTS
 - Worktree: ~/worktrees/[BRANCH_NAME]
 
 * Exploration
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Make Claude use a lot of tokens
 - Great way to refresh your own understanding
 - Follow up for additional details
@@ -330,6 +374,9 @@ $ realpath [file1] [file2]
 #+end_src
 
 * Planning
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - What are we building?
 - How will we build it?
 - Ask for questions and answer them
@@ -359,6 +406,9 @@ Sounds good? Let's see the code.
 #+end_src
 
 * Build Root
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Very precise language
 - Function names and definitions
 - Which files are we working in
@@ -385,12 +435,18 @@ RateWindow:
 #+end_src
 
 ** Feel
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - I'm in control
 - Great input → Great output
 - I'm not surprised by the output
 - With these instructions, I could build this myself
 
 * Build Leaves
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Context is now great
 - Fill in the blanks
 - Let Claude do its thing
@@ -410,6 +466,9 @@ Also add a RateWindowChart that displays the last 24 hours with sorting and pagi
 #+end_src
 
 ** Feel
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - I'm delegating the details
 - Reaping the benefits of our structured approach
 - I trust the output will be sensible
@@ -452,7 +511,14 @@ IMPORTANT TOOL RESTRICTIONS:
 #+end_src
 
 * Cleanup
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Remove LLM idioms and artifacts
+- Move all imports to the top
+- Remove TODO/FIXME already implemented
+- Delete commented-out code
+- Make it look production-ready
 
 ** Prompt
 #+begin_src markdown
@@ -470,15 +536,24 @@ Keep the code functionally identical, just make it look production-ready.
 #+end_src
 
 ** Feel
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - This makes it feel like my code
 - Ready to commit
 - No evidence of LLM artifacts
 
 * Get feedback
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Compose email
 - Update issue
 - Ping stakeholders on slack
 
 * Ship It
+:PROPERTIES:
+:TEMPLATE: bullets
+:END:
 - Merge PR
 - Update and close issue
