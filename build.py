@@ -12,7 +12,9 @@ import re
 def slugify(text):
     """Convert text to filename: lowercase, spaces to dashes, remove invalid chars"""
     text = re.sub(r'[^\w\s-]', '', text)  # Remove special chars
-    return text.lower().replace(' ', '-')
+    text = text.lower().replace(' ', '-')
+    text = re.sub(r'-+', '-', text)  # Collapse multiple dashes
+    return text.strip('-')
 
 
 def extract_bullets(body):
