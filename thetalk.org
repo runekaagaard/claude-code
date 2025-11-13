@@ -186,10 +186,13 @@ Dear Claude:
 - update each llm/[app].md file with these details
 #+end_src
 
-* Development setup
+* Development Setup
+- What makes developers happy makes Claude effective
 - Fast dev environment creation
-- Local anonymized databases
-- Tests
+- Local databases with real data
+- Tests for AI feedback loop
+- Auto port discovery across workspaces
+- Branch name visible in UI
 
 ** Worktrees
 - Claude Code conversations are directory specific
@@ -205,13 +208,6 @@ git commit --allow-empty -m "Initial commit"
 git push -u origin mybranch
 #+end_src
 
-** Workspace creation
-- Tmux
-- Scripted terminal
-- Web UI
-- Terminal wrappers
-
-** Workspace creation 2
 #+begin_src bash
 # Makefile
 worktree-setup-symlink:
@@ -221,6 +217,38 @@ worktree-setup-symlink:
 
 #+begin_src bash
 claude-terminator-workspace ~/worktrees/1234_mybranch/
+#+end_src
+
+** Multiple Claude Code's
+- Tmux
+- Scripted terminal
+- Web UI
+- Terminal wrappers
+
+
+* Lets start building stuff
+#+begin_src bash
+# New claude session
+cl() {
+   unset ANTHROPIC_API_KEY
+   claude --mcp-config ~/claude_code_config.json "$@"
+}
+
+# Continue claude session
+clc() {
+   unset ANTHROPIC_API_KEY
+   claude --continue --mcp-config ~/claude_code_config.json "$@"
+}
+
+# Project manager
+clp() {
+   unset ANTHROPIC_API_KEY
+   claude --continue --add-dir ~/worktrees --mcp-config ~/claude_code_config.json "$@"
+}
+#+end_src
+
+#+begin_src markdown
+/issue Please create a new issue for: My Awesome New Feature
 #+end_src
 
 ** /issue command
@@ -239,8 +267,6 @@ Please process these instructions: $ARGUMENTS
 # Branches
 ...
 
-...
-
 ## Output
 
 ✅ Created:
@@ -249,11 +275,6 @@ Please process these instructions: $ARGUMENTS
 - Branch: [BRANCH]
 - [PR_URL]
 - Worktree: ~/worktrees/[BRANCH]
-
-* Lets start building stuff
-#+begin_src makedown
-/issue Please create a new issue for: My Awesome New Feature
-#+end_src
 
 * Exploration and Research
 - Make Claude use a lot of tokens
@@ -316,6 +337,7 @@ $ realpath [file1] [file2]
 - Ask for questions and answer them
 - Don't use plan mode
 - "Don't code"
+- "Lets imagine something bad happens to us if we don't get this right"
 
 ** Prompt
 #+begin_src markdown
@@ -350,33 +372,34 @@ Let's build the core foundation. We'll work in these files:
 - [FILE_1]
 - [FILE_2]
 
-Create a function 
+Please create a function 
 
-def function_name([param1]: [Type1], [param2]: [Type2]) -> [ReturnType] 
+def myfunc(a: str, b: int) -> list
 
-that ...
+that works like this: ...
 
 ...
 
 Uh, and we'll need datastructures as well. Please suggest better names, labels and help texts for these before coding the solution.
 
 SomeClass:
-   [field1] - int
-   [field2] - text, nullable
+   foo - int
+   bar - text, nullable
 #+end_src
 
 ** Feel
 - I'm in control
-- I'm not surprised by the output
 - Great input → Great output
-- With these instructions, I could build this
+- I'm not surprised by the output
+- With these instructions, I could build this myself
 
 * Build the Leaves
 - Context is now great
 - Fill in the blanks
-- Let Claude use its knowledge
+- Let Claude do it's thing
 - Trust the LLM with implementation details
 - Great for boilerplate, UI, CRUD, admin interfaces
+- Read PR and give feedback
 
 ** Prompt
 #+begin_src markdown
@@ -394,6 +417,7 @@ Also add a [UI_COMPONENT] that displays [DATA] with sorting and pagination. Make
 - Reaping the benefits of our structured approach
 - I trust the output will be sensible
 - This is what LLMs are great at
+- The context is great so the rice grains falls in all the right places
 
 * Commit
 #+begin_src bash
