@@ -63,7 +63,7 @@
 
 <!-- Two Column Layout -->
 <div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
-    <!-- Left Sidebar: Title -->
+    <!-- Left Sidebar -->
     <div class="pt-4">
         <div class="space-y-3">
             <h1 class="text-4xl font-bold text-gray-900 leading-tight">Exploration</h1>
@@ -75,10 +75,8 @@
 
     <!-- Right Content Area -->
     <div class="pt-4">
-        <div class="w-full ">
-            
-            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
-                <pre class="leading-relaxed text-gray-800"><code>Hi Claude, let's start by researching how rate limiting works in the system.
+        <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
+            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>Hi Claude, let's start by researching how rate limiting works in the system.
 
 First read:
 - The current issue in Redmine
@@ -91,9 +89,7 @@ Then read these core files in full:
 
 After that, reference relevant functions in src/cache/redis_client.py and do additional research as needed.
 
-Finally, summarize your findings.</code></pre>
-            </div>
-            
+Finally, summarize your findings.</code></pre></div>
         </div>
     </div>
 </div>
