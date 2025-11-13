@@ -13,14 +13,14 @@ Making It Work on Large Projects
 * About 
 ** Rune Kaagaard
 - CTO Prescriba
-- Psychological/Pshyatrictric services
+- Psychological/Psychiatric services
 - 50.000 Clients/year
 - Composer & Pianist
 - Dragør
 
 ** runekaagaard@github
 - https://github.com/runekaagaard
-- https://github.com/runekaagaard/mcp-alchemy - Relation Databases 
+- https://github.com/runekaagaard/mcp-alchemy - Relational Databases 
 - https://github.com/runekaagaard/mcp-redmine) - Redmine Project Management
 - https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
 - hypergen.it - Django Liveview
@@ -60,8 +60,8 @@ claude
 - gh: Command line Github integration
 
 * MCP Servers
-- Give Claude code access to your own stuff
-- Database access, browser automation, APIs, design tools, etc.
+- Give Claude code access to all your stuff
+- Database, Browser Automation, Design tools, Messaging
 - Write your own!
 - Keep it small
 
@@ -128,7 +128,14 @@ if __name__ == "__main__":
 }
 #+end_src
 
-** Strategies
+** What's a good MCP server?
+- As few tools as possible
+- Add discoverability to existing programs
+- Don't change the documentation, just change the tool
+- Change interface to something the model likes
+- OpenAPI's are great
+
+** MCP Server API examples
 | Operation  | MCP Alchemy        | Notmuch Sendmail      | Redmine        |
 |------------+--------------------+-----------------------+----------------|
 | Discovery  | all_table_names    | find_email_thread     | paths_list     |
@@ -152,6 +159,8 @@ if __name__ == "__main__":
 - Don't use directory CLAUDE.md's
 
 ** llm/[app1.md,app2.md,...]
+- Full source too big for context
+- Document each app separately, then add cross cutting concerns
 - Module-specific documentation
 - Cross-cutting concerns
 - "Be sure to read relevant llm files in the @llm folder"
