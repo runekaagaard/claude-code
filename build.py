@@ -10,13 +10,8 @@ import re
 
 
 def slugify(text):
-    """Convert text to URL-friendly slug"""
-    slug = text.lower()
-    slug = re.sub(r'[\[\]/\(\):]', '', slug)
-    slug = re.sub(r'[^\w\s-]', '', slug)
-    slug = re.sub(r'\s+', '-', slug)
-    slug = re.sub(r'-+', '-', slug)
-    return slug.strip('-')
+    """Convert text to filename: lowercase, spaces to dashes"""
+    return text.lower().replace(' ', '-')
 
 
 def extract_bullets(body):
