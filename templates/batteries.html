@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!--#include virtual="_slide-grid-start.html" -->
+<!-- Two Column Layout -->
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar: Title -->
+    <div class="pt-4">
+        <div class="space-y-3">
             <h1 class="text-4xl font-bold text-gray-900 leading-tight">{{ title }}</h1>
-<!--#include virtual="_slide-grid-middle.html" -->
-            <div class="grid grid-cols-4 gap-3">
-                {% for item in items %}
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">{{ item.name }}</h3>
-                    <div class="text-xs text-gray-600">{{ item.description }}</div>
-                </div>
-                {% endfor %}
+        </div>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="pt-4">
+        <div class="grid grid-cols-4 gap-3">
+            {% for item in items %}
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">{{ item.name }}</h3>
+                <div class="text-xs text-gray-600">{{ item.description }}</div>
             </div>
-<!--#include virtual="_slide-grid-end.html" -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}

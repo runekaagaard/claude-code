@@ -61,93 +61,102 @@
 </script>
 
 
-<!--#include virtual="_slide-grid-start.html" -->
+<!-- Two Column Layout -->
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar: Title -->
+    <div class="pt-4">
+        <div class="space-y-3">
             <h1 class="text-4xl font-bold text-gray-900 leading-tight">Batteries</h1>
-<!--#include virtual="_slide-grid-middle.html" -->
-            <div class="grid grid-cols-4 gap-3">
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Task</h3>
-                    <div class="text-xs text-gray-600">Launch specialized sub-agents for complex, multi-step autonomous work</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Bash</h3>
-                    <div class="text-xs text-gray-600">Execute shell commands in persistent sessions for builds, tests, automation</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Glob</h3>
-                    <div class="text-xs text-gray-600">Fast file pattern matching (e.g., **/*.js, src/**/*.ts)</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Grep</h3>
-                    <div class="text-xs text-gray-600">Powerful content search using ripgrep with regex support</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Read</h3>
-                    <div class="text-xs text-gray-600">Read text files, images, PDFs, and Jupyter notebooks</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Edit</h3>
-                    <div class="text-xs text-gray-600">Exact string replacements in files</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">Write</h3>
-                    <div class="text-xs text-gray-600">Write or overwrite files with new content</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">NotebookEdit</h3>
-                    <div class="text-xs text-gray-600">Edit Jupyter notebook cells (replace, insert, delete)</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">WebFetch</h3>
-                    <div class="text-xs text-gray-600">Fetch and process web content with AI analysis</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">WebSearch</h3>
-                    <div class="text-xs text-gray-600">Search the web for current information (US only)</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">TodoWrite</h3>
-                    <div class="text-xs text-gray-600">Create and manage structured task lists for progress tracking</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">ExitPlanMode</h3>
-                    <div class="text-xs text-gray-600">Exit plan mode after presenting implementation plan</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">BashOutput</h3>
-                    <div class="text-xs text-gray-600">Retrieve output from running background bash shells</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">KillShell</h3>
-                    <div class="text-xs text-gray-600">Terminate running background bash shell processes</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">SlashCommand</h3>
-                    <div class="text-xs text-gray-600">Execute custom slash commands</div>
-                </div>
-                
-                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
-                    <h3 class="font-bold text-base text-claude-orange mb-1">gh</h3>
-                    <div class="text-xs text-gray-600">Command line Github integration</div>
-                </div>
-                
+        </div>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="pt-4">
+        <div class="grid grid-cols-4 gap-3">
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Task</h3>
+                <div class="text-xs text-gray-600">Launch specialized sub-agents for complex, multi-step autonomous work</div>
             </div>
-<!--#include virtual="_slide-grid-end.html" -->
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Bash</h3>
+                <div class="text-xs text-gray-600">Execute shell commands in persistent sessions for builds, tests, automation</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Glob</h3>
+                <div class="text-xs text-gray-600">Fast file pattern matching (e.g., **/*.js, src/**/*.ts)</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Grep</h3>
+                <div class="text-xs text-gray-600">Powerful content search using ripgrep with regex support</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Read</h3>
+                <div class="text-xs text-gray-600">Read text files, images, PDFs, and Jupyter notebooks</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Edit</h3>
+                <div class="text-xs text-gray-600">Exact string replacements in files</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">Write</h3>
+                <div class="text-xs text-gray-600">Write or overwrite files with new content</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">NotebookEdit</h3>
+                <div class="text-xs text-gray-600">Edit Jupyter notebook cells (replace, insert, delete)</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">WebFetch</h3>
+                <div class="text-xs text-gray-600">Fetch and process web content with AI analysis</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">WebSearch</h3>
+                <div class="text-xs text-gray-600">Search the web for current information (US only)</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">TodoWrite</h3>
+                <div class="text-xs text-gray-600">Create and manage structured task lists for progress tracking</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">ExitPlanMode</h3>
+                <div class="text-xs text-gray-600">Exit plan mode after presenting implementation plan</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">BashOutput</h3>
+                <div class="text-xs text-gray-600">Retrieve output from running background bash shells</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">KillShell</h3>
+                <div class="text-xs text-gray-600">Terminate running background bash shell processes</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">SlashCommand</h3>
+                <div class="text-xs text-gray-600">Execute custom slash commands</div>
+            </div>
+            
+            <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                <h3 class="font-bold text-base text-claude-orange mb-1">gh</h3>
+                <div class="text-xs text-gray-600">Command line Github integration</div>
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 
     </div>
