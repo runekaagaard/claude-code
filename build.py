@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
 Build presentation slides from thetalk.org
-Converts org-mode content directly to HTML
+Uses org-python to convert org-mode to HTML
 """
 import orgparse
+from orgpython import to_html
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 import re
@@ -17,103 +18,44 @@ def slugify(text):
     return text.strip('-')
 
 
-def autolink(text):
-    """Convert URLs to <a> tags"""
-    url_pattern = r'(https?://[^\s]+)'
-    return re.sub(url_pattern, r'<a href="\1" class="text-claude-orange hover:underline">\1</a>', text)
+def autolink_urls(html):
+    """Convert plain URLs to <a> tags"""
+    url_pattern = r'(?<!href=")(?<!src=")(https?://[^\s<]+)'
+    return re.sub(url_pattern, r'<a href="\1" class="text-claude-orange hover:underline">\1</a>', html)
 
 
-def org_to_html(body):
-    """Convert org-mode body to HTML"""
+def org_body_to_html(body):
+    """Convert org-mode body to styled HTML"""
     if not body:
         return ""
 
-    html_parts = []
-    lines = body.strip().split('\n')
-    i = 0
+    # Convert org to HTML
+    html = to_html(body, toc=False, highlight=False)
 
-    while i < len(lines):
-        line = lines[i].strip()
+    # Autolink URLs
+    html = autolink_urls(html)
 
-        # Code blocks
-        if line.startswith('#+begin_src'):
-            lang = line.split()[1] if len(line.split()) > 1 else ''
-            code_lines = []
-            i += 1
-            while i < len(lines) and not lines[i].strip().startswith('#+end_src'):
-                code_lines.append(lines[i])
-                i += 1
-            code = '\n'.join(code_lines)
-            html_parts.append(f'<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>{code}</code></pre></div>')
-            i += 1
-            continue
+    # Wrap code blocks in styled divs
+    html = re.sub(
+        r'<pre>(.*?)</pre>',
+        r'<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800">\1</pre></div>',
+        html,
+        flags=re.DOTALL
+    )
 
-        # Tables
-        if line.startswith('|'):
-            table_lines = []
-            while i < len(lines) and lines[i].strip().startswith('|'):
-                table_lines.append(lines[i].strip())
-                i += 1
-            html_parts.append(parse_org_table(table_lines))
-            continue
+    # Wrap tables in styled divs
+    html = re.sub(
+        r'<table>(.*?)</table>',
+        r'<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><table class="w-full text-lg">\1</table></div>',
+        html,
+        flags=re.DOTALL
+    )
 
-        # Bullets
-        if line.startswith('-'):
-            text = autolink(line[1:].strip())
-            html_parts.append(f'<p>{text}</p>')
-            i += 1
-            continue
-
-        # Skip empty lines and org directives
-        if line and not line.startswith('#'):
-            html_parts.append(f'<p>{autolink(line)}</p>')
-
-        i += 1
-
-    return '\n'.join(html_parts)
-
-
-def parse_org_table(lines):
-    """Convert org-mode table to HTML"""
-    # Remove separator lines
-    lines = [line for line in lines if not set(line.replace('|', '').replace('+', '').strip()) == {'-'}]
-
-    if len(lines) < 2:
-        return ""
-
-    # Parse rows
-    rows = []
-    for line in lines:
-        cells = [cell.strip() for cell in line.split('|')[1:-1]]
-        if cells:
-            rows.append(cells)
-
-    if not rows:
-        return ""
-
-    # Build HTML table
-    html = '<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">'
-    html += '<table class="w-full text-lg">'
-
-    # Header
-    html += '<thead><tr class="border-b-2 border-gray-300">'
-    for cell in rows[0]:
-        html += f'<th class="text-left py-2 px-3">{cell}</th>'
-    html += '</tr></thead>'
-
-    # Body
-    html += '<tbody>'
-    for row in rows[1:]:
-        html += '<tr class="border-b border-gray-200">'
-        for j, cell in enumerate(row):
-            if j == 0:
-                html += f'<td class="py-2 px-3 font-semibold align-top">{cell}</td>'
-            else:
-                # Handle multi-line cells
-                cell_html = cell.replace('\n', '<br>') if cell else ''
-                html += f'<td class="py-2 px-3 align-top">{cell_html}</td>'
-        html += '</tr>'
-    html += '</tbody></table></div>'
+    # Add table styling
+    html = html.replace('<thead>', '<thead class="border-b-2 border-gray-300">')
+    html = html.replace('<tr>', '<tr class="border-b border-gray-200">')
+    html = html.replace('<th>', '<th class="text-left py-2 px-3">')
+    html = html.replace('<td>', '<td class="py-2 px-3 align-top">')
 
     return html
 
@@ -163,7 +105,7 @@ def parse_org_file(org_path):
 
             # Section with body
             if has_body and not node.children:
-                html_content = org_to_html(node.body)
+                html_content = org_body_to_html(node.body)
                 slides.append({
                     'title': clean_heading,
                     'html_content': html_content,
@@ -172,7 +114,7 @@ def parse_org_file(org_path):
                 })
 
             elif has_body and node.children:
-                html_content = org_to_html(node.body)
+                html_content = org_body_to_html(node.body)
                 slides.append({
                     'title': clean_heading,
                     'html_content': html_content,
@@ -205,7 +147,7 @@ def parse_org_file(org_path):
                                 'filename': filename,
                             })
                         else:
-                            html_content = org_to_html(child.body)
+                            html_content = org_body_to_html(child.body)
                             slides.append({
                                 'title': clean_heading,
                                 'subtitle': child_heading,
@@ -251,7 +193,6 @@ def build_slides(slides, output_dir):
         shutil.copy('src/styles.css', output_path / 'styles.css')
 
     print(f"✓ Built {len(slides)} slides")
-    return filenames
 
 
 if __name__ == '__main__':

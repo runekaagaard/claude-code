@@ -76,9 +76,12 @@
     <!-- Right Content Area -->
     <div class="pt-4">
         <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code># Get absolute paths for files
-$ realpath [file1] [file2]</code></pre></div>
-<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>(defun rk-realpath ()
+            <pre class="src src-bash">
+# Get absolute paths for files
+$ realpath [file1] [file2]
+</pre>
+<pre class="src src-elisp">
+(defun rk-realpath ()
   "Copy the full path of current buffer to kill ring"
   (interactive)
   (kill-new (buffer-file-name))
@@ -99,7 +102,8 @@ $ realpath [file1] [file2]</code></pre></div>
     ;; Create newline separated string and kill it
     (let ((paths-str (mapconcat #'identity (delete-dups (nreverse paths)) "\n")))
       (kill-new paths-str)
-      (message "Copied %d visible buffer paths" (length (split-string paths-str "\n" t))))))</code></pre></div>
+      (message "Copied %d visible buffer paths" (length (split-string paths-str "\n" t))))))
+</pre>
         </div>
     </div>
 </div>

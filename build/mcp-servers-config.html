@@ -76,7 +76,8 @@
     <!-- Right Content Area -->
     <div class="pt-4">
         <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>{
+            <pre class="src src-json">
+{
   "mcpServers": {
     "multiply": {
       "command": "python",
@@ -104,12 +105,13 @@
       "args": ["--from", "mcp-redmine==2025.09.03.141435",
                "--refresh-package", "mcp-redmine", "mcp-redmine"],
       "env": {
-        "REDMINE_URL": "https://redmine.example.com",
+        "REDMINE_URL": "<a href="https://redmine.example.com"," class="text-claude-orange hover:underline">https://redmine.example.com",</a>
         "REDMINE_API_KEY": "your-api-key"
       }
     }
   }
-}</code></pre></div>
+}
+</pre>
         </div>
     </div>
 </div>

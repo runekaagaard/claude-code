@@ -74,7 +74,8 @@
     <!-- Right Content Area -->
     <div class="pt-4">
         <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code># New claude session
+            <pre class="src src-bash">
+# New claude session
 cl() {
    unset ANTHROPIC_API_KEY
    claude --mcp-config ~/claude_code_config.json "$@"
@@ -90,8 +91,11 @@ clc() {
 clp() {
    unset ANTHROPIC_API_KEY
    claude --continue --add-dir ~/worktrees --mcp-config ~/claude_code_config.json "$@"
-}</code></pre></div>
-<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>/issue Please create a new issue for: My Awesome New Feature</code></pre></div>
+}
+</pre>
+<pre class="src src-markdown">
+/issue Please create a new issue for: My Awesome New Feature
+</pre>
         </div>
     </div>
 </div>

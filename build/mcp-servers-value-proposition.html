@@ -76,8 +76,11 @@
     <!-- Right Content Area -->
     <div class="pt-4">
         <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>$ pip install mcp[cli]</code></pre></div>
-<div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code>from mcp.server.fastmcp import FastMCP
+            <pre class="src src-bash">
+$ pip install mcp[cli]
+</pre>
+<pre class="src src-python">
+from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("Multiply Server")
 
@@ -85,15 +88,16 @@ mcp = FastMCP("Multiply Server")
 def multiply(a: float, b: float) -> str:
     """
     Multiply two numbers together.
-    
+
     Args:
         a: First number
         b: Second number
-    
+
     return str(a * b)
 
 if __name__ == "__main__":
-    mcp.run()</code></pre></div>
+    mcp.run()
+</pre>
         </div>
     </div>
 </div>

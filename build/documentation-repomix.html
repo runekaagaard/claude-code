@@ -76,7 +76,8 @@
     <!-- Right Content Area -->
     <div class="pt-4">
         <div class="space-y-6 text-2xl text-gray-700 leading-relaxed">
-            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8"><pre class="leading-relaxed text-gray-800"><code># Generate with repomix
+            <pre class="src src-bash">
+# Generate with repomix
 for app in src/apps/*; do
   appname=$(basename $app)
   repomix --include "$app/**" --style markdown \
@@ -84,7 +85,8 @@ for app in src/apps/*; do
   claude -p -c "Read @repomix-$appname.md then follow \
     instructions in @llm/how_to_document_an_app.md and \
     generate llm/$appname.md"
-done</code></pre></div>
+done
+</pre>
         </div>
     </div>
 </div>
