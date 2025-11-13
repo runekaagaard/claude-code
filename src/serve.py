@@ -64,6 +64,7 @@ class SSIHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 def main():
     import sys
+    import signal
 
     port = PORT
     if len(sys.argv) > 1:
@@ -71,13 +72,30 @@ def main():
 
     Handler = SSIHTTPRequestHandler
 
-    with socketserver.TCPServer(("", port), Handler) as httpd:
-        print(f"Serving at http://localhost:{port}")
-        print("Press Ctrl+C to stop")
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("\nShutting down server...")
+    # Allow reusing the address immediately after shutdown
+    socketserver.TCPServer.allow_reuse_address = True
+
+    httpd = socketserver.TCPServer(("", port), Handler)
+
+    def signal_handler(sig, frame):
+        print("\nShutting down server...")
+        httpd.shutdown()
+        httpd.server_close()
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    print(f"Serving at http://localhost:{port}")
+    print("Press Ctrl+C to stop")
+
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
 
 
 if __name__ == "__main__":

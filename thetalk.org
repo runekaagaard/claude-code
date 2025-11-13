@@ -37,6 +37,7 @@ claude
 - Multimodal
 - Batteries included
 - Fuzzy & Random
+- Hooks, Commands, Skills, Plugins
 
 ** Batteries
 [CLAUDE: make 4x4 cards of these]
@@ -178,7 +179,6 @@ Dear Claude:
 
 
 * Workflow Command
-** Talk
 - Worktrees over branch switching
 - Each task gets isolated directory
 - No context switching overhead

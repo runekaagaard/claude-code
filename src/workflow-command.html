@@ -1,0 +1,75 @@
+<!--#include virtual="_header.html" -->
+
+<!-- Two Column Layout -->
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar -->
+    <div class="pt-4">
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold text-gray-900 leading-tight">Workflow Command</h1>
+            <h2 class="text-xl text-gray-500 font-medium">Command</h2>
+        </div>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="pt-4 overflow-y-auto">
+        <div class="w-full">
+            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-6">
+                <pre class="leading-relaxed text-gray-800 text-sm"><code>---
+description: Manage issues, branches, and PRs with worktrees
+---
+
+Handle workflow: $ARGUMENTS
+
+## Actions
+
+Parse intent:
+- "r560" → Create worktree for existing branch
+- "branch r555" → Create branch + worktree for existing issue
+- "new [title]" → Create issue + branch + worktree
+- "pr" → Create pull request
+- "close" → Close workflow
+
+## Configuration
+
+- Branch: [num]_[name]_r[issue]
+- Worktree: ~/worktrees/[branch]
+- PR title: [title] r[issue]
+- Default: Always create worktrees, never switch branches
+
+## Worktree Setup
+
+```bash
+git worktree add -b BRANCH ~/worktrees/BRANCH origin/master
+cd ~/worktrees/BRANCH
+git commit --allow-empty -m "Initial commit rISSUE"
+git push -u origin BRANCH
+```
+
+## Output
+
+```
+✅ Created:
+- Issue #[NUM]: [TITLE]
+  [ISSUE_URL]
+- Branch: [BRANCH]
+- Worktree: ~/worktrees/[BRANCH]
+```
+
+## Workspace Setup
+
+Optional: "setup workspace" or "terminator workspace"
+
+Creates terminal layout with:
+- Claude CLI (with --continue for session persistence)
+- Git status display
+- Dev server (auto-detects free port)
+- Asset watcher (auto-detects free port)
+- Tab titled with branch name
+
+Everything ready to start coding immediately.</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--#include virtual="_footer.html" -->

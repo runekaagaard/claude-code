@@ -1,0 +1,31 @@
+<!--#include virtual="_header.html" -->
+
+<!-- Two Column Layout -->
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar -->
+    <div class="pt-4">
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold text-gray-900 leading-tight">Documentation</h1>
+            <h2 class="text-xl text-gray-500 font-medium">Repomix</h2>
+        </div>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="pt-4">
+        <div class="w-full">
+            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
+                <pre class="leading-relaxed text-gray-800"><code># Generate with repomix
+for app in src/apps/*; do
+  appname=$(basename $app)
+  repomix --include "$app/**" --style markdown \
+    --output "repomix-$appname.md"
+  claude -p -c "Read @repomix-$appname.md then follow \
+    instructions in @llm/how_to_document_an_app.md and \
+    generate llm/$appname.md"
+done</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--#include virtual="_footer.html" -->
