@@ -1,243 +1,183 @@
-#+title: Claude Code in Practice: Making It Work on Real Projects
-
-* Title
+* [CLAUDE: Title type slide]
 Claude Code in Practice
 Making It Work on Real Projects
 
-* About
-** Me
-- Rune Kaagaard
-- Lead Developer at Prescriba
-- Building AI-powered developer tools
-- MCP Alchemy: Database MCP server for Claude
+* From Scissors to Shipping Code
+- 1920 Physical cut-up method with scissors
+- 1995 Verbasizer 2.0 digital randomization
+- 2019 AI Dungeon interactive text generation
+- 2022 ChatGPT browser-based prompting
+- 2024 Tools/MCP servers provide filesystem access
+- 2025 Agentic coding assistants with full workflow automation
+
+* About 
+** Rune Kaagaard
+- CTO Prescriba
+- Psychological/Pshyatrictric services
+- 50.000 Clients / year
+- Composer/Pianist
+- Dragør
+
+** runekaagaard@github
+- https://github.com/runekaagaard/mcp-alchemy - Relation Databases 
+- https://github.com/runekaagaard/mcp-redmine) - Redmine Project Management
+- https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
+- hypergen.it - Django Liveview
 
 ** This Talk
-- Real workflows that work in production
-- Documentation strategies for large codebases
-- Automation and tooling patterns
-- What Anthropic learned building Claude Code with Claude Code
+[CLAUDE: Insert relevant topics here]
 
-* Getting Started
-** Talk
-- npm install -g @anthropic-ai/claude-code
-- Three modes: Normal, Plan, Auto-accept
-- Start with Plan mode
-- Always use git branches
-
-** Claude
-#+begin_src bash
+* [CLAUDE: Title type slide]
 npm install -g @anthropic-ai/claude-code
 claude
-#+end_src
 
-* Philosophy
-** Talk
-- Claude = fast mid-level dev with perfect memory
-- You shift from engineer to agent manager
-- Needs direction, reviews, guardrails
-- Not a senior architect (yet)
-- 90% of Claude Code written by Claude Code
+* Claude Code
+- Agentic Code Editor
+- Command Line
+- Multimodal
+- Batteries included
+- Fuzzy & Random
 
-** Key Insight
-Context management > prompt engineering
-
-* Documentation
-** CLAUDE.md
-*** Talk
-- Project memory that persists across sessions
-- Hierarchical: global → project → directory
-- Tech stack, commands, architecture, conventions
-- Keep under 500 lines
-- Update regularly
-
-*** Structure
-- Tech stack and versions
-- Build/test/deploy commands
-- Architecture patterns
-- Code style conventions
-- Do Not sections
-- Known issues and edge cases
-
-** llm/ Folder
-*** Talk
-- Module-specific documentation
-- Cross-cutting concerns
-- Too detailed for CLAUDE.md
-- Reference with @llm/topic.md
-
-*** Tooling
-#+begin_src bash
-# Generate with repomix
-for app in src/apps/*; do
-  appname=$(basename $app)
-  repomix --include "$app/**" --style markdown \
-    --output "packed-$appname.md"
-  claude -p -c "Read @packed-$appname.md and \
-    @llm/how_to_document_an_app.md then \
-    generate llm/$appname.md"
-done
-#+end_src
-
-* The Workflow
-** Explore
-*** Talk
-- Load relevant context
-- Tell Claude NOT to code yet
-- Use @ for file references
-- Build understanding incrementally
-
-*** Claude
-#+begin_src markdown
-Read and understand the auth system:
-@src/services/auth.ts
-@src/middleware/auth.ts
-
-Don't make changes yet. Just explore.
-#+end_src
-
-** Plan
-*** Talk
-- Use Shift+Tab for plan mode
-- Create explicit implementation plan
-- Review before proceeding
-- Test-driven: write tests first
-
-*** Claude
-#+begin_src markdown
-Create a detailed plan for adding OAuth support.
-Include test strategy.
-I'll review before you proceed.
-#+end_src
-
-** Code
-*** Talk
-Root and Leaves:
-- Root: API interfaces, types, test scaffolding
-- Leaves: UI, boilerplate, implementation details
-- Choose based on problem
-
-*** Claude
-#+begin_src markdown
-Write tests for OAuth flow first.
-Then implement to make tests pass.
-#+end_src
-
-*** Feel
-- I'm in control
-- Not surprised by output
-- Great input → great output
-
-** Ship
-*** Talk
-- Commit with meaningful messages
-- Update documentation
-- Create PR with context
-- Always use git branches
-
-*** Tooling
-#+begin_src bash
-# Auto-generate commit messages
-clg() {
-  claude -p "Generate conventional commit for staged changes"
-}
-#+end_src
-
-*** Feel
-- Everything wrapped up
-- Ready for next task
-- No manual ceremony
-
-* Context Management
-** Talk
-- 200K tokens (1M via API)
-- Everything counts (15K baseline)
-- Performance degrades after 80%
-- Lost-in-the-middle problem
-- /clear frequently
-
-** Practice
-- Clear between features
-- Monitor with /context
-- Stay under 80% for quality
-- Multiple short sessions > one long session
-- Claude 4.5+ discovers state from filesystem
-
-* Built-in Tools
-** Talk
-- File operations: Read, Write, Edit, Grep
-- Execution: Bash, npm, pip, cargo
-- Testing: Vitest, Jest, Pytest
-- Version control: Full git operations
-- Web access: WebFetch, Curl
-
-** Permissions
-*** Talk
-- Auto-allowed, Prompt, or Denied
-- Glob patterns for rules
-- Sandboxed by default
-- 84% fewer permission prompts
-
-*** Tooling
-#+begin_src json
-{
-  "permissions": {
-    "allow": ["Read(*)", "Edit(src/**)", "Bash(npm test)"],
-    "deny": ["Read(.env)", "Delete(*)"]
-  }
-}
-#+end_src
+** Batteries
+[CLAUDE: make 4x4 cards of these]
+- Task: Launch specialized sub-agents for complex, multi-step autonomous work
+- Bash: Execute shell commands in persistent sessions for builds, tests, automation
+- Glob: Fast file pattern matching (e.g., **/*.js, src/**/*.ts)
+- Grep: Powerful content search using ripgrep with regex support
+- Read: Read text files, images, PDFs, and Jupyter notebooks
+- Edit: Exact string replacements in files
+- Write: Write or overwrite files with new content
+- NotebookEdit: Edit Jupyter notebook cells (replace, insert, delete)
+- WebFetch: Fetch and process web content with AI analysis
+- WebSearch: Search the web for current information (US only)
+- TodoWrite: Create and manage structured task lists for progress tracking
+- ExitPlanMode: Exit plan mode after presenting implementation plan
+- BashOutput: Retrieve output from running background bash shells
+- KillShell: Terminate running background bash shell processes
+- SlashCommand: Execute custom slash commands
+- gh: Command line Github integration
 
 * MCP Servers
-** Talk
-- Extend Claude with external tools
-- Database access, browser automation, APIs
-- Configure in .mcp.json
-- Use when CLI tools insufficient
+- Give Claude code access to your own stuff
+- Database access, browser automation, APIs, design tools, etc.
+- Write your own!
+- Keep it small
 
-** Example
+** Value proposition
+#+begin_src bash
+$ pip install mcp[cli]
+#+end_src
+
+#+begin_src python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("Multiply Server")
+
+@mcp.tool(structured_output=False)
+def multiply(a: float, b: float) -> str:
+    """
+    Multiply two numbers together.
+    
+    Args:
+        a: First number
+        b: Second number
+    
+    return str(a * b)
+
+if __name__ == "__main__":
+    mcp.run()
+#+end_src
+
+** mcp_config.json
 #+begin_src json
 {
   "mcpServers": {
+    "multiply": {
+      "command": "python",
+      "args": ["/path/to/mcp-multiply/server.py"]
+    },
     "database": {
-      "command": "npx",
-      "args": ["@modelcontextprotocol/server-postgres"]
+      "command": "uvx",
+      "args": ["--from", "mcp-alchemy==2025.8.15.91819",
+               "--refresh-package", "mcp-alchemy", "mcp-alchemy"],
+      "env": {
+        "DB_URL": "sqlite:///path/to/database.db"
+      }
+    },
+    "email": {
+      "command": "uvx",
+      "args": ["--from", "mcp-notmuch-sendmail==2025.04.09.174710",
+               "--refresh-package", "mcp-notmuch-sendmail", "mcp-notmuch-sendmail"],
+      "env": {
+        "NOTMUCH_DATABASE_PATH": "/path/to/notmuch/db",
+        "SENDMAIL_FROM_EMAIL": "you@example.com"
+      }
+    },
+    "redmine": {
+      "command": "uvx",
+      "args": ["--from", "mcp-redmine==2025.09.03.141435",
+               "--refresh-package", "mcp-redmine", "mcp-redmine"],
+      "env": {
+        "REDMINE_URL": "https://redmine.example.com",
+        "REDMINE_API_KEY": "your-api-key"
+      }
     }
   }
 }
 #+end_src
 
-** Use Cases
-- Database queries and exploration
-- Browser automation for UI testing
-- External API integrations
-- Design file access (Figma)
-- Error tracking (Sentry)
+** Strategies
+| Operation  | MCP Alchemy        | Notmuch Sendmail      | Redmine        |
+|------------+--------------------+-----------------------+----------------|
+| Discovery  | all_table_names    | find_email_thread     | paths_list     |
+|            | filter_table_names |                       | request        |
+|            | schema_definitions |                       |                |
+|------------+--------------------+-----------------------+----------------|
+| Retrieval  | execute_query      | view_email_thread     | paths_info     |
+|            |                    | read_email_attachment | request        |
+|------------+--------------------+-----------------------+----------------|
+| Mutation   | execute_query      | compose_new_email     | request        |
+|            |                    | compose_email_reply   |                |
+|            |                    | send_email            |                |
+|------------+--------------------+-----------------------+----------------|
+| Utility    |                    | sync_emails           | upload         |
+|            |                    |                       | download       |
 
-* Hooks & Automation
-** Talk
-- Deterministic quality gates
-- No prompts required
-- Run before/after tool use
-- Enforce standards automatically
+* Documentation
+** CLAUDE.md
+- Project instructions that persists across sessions
+- Hierarchical: global → project → directory
+- Tech stack, commands, architecture, conventions
+- Don't use directory CLAUDE.md's
 
-** Patterns
-#+begin_src json
-{
-  "matcher": "Edit|Write",
-  "hooks": [{
-    "type": "command",
-    "command": "prettier --write \"$CLAUDE_FILE_PATHS\""
-  }]
-}
+** llm/[app1.md,app2.md,...]
+- Module-specific documentation
+- Cross-cutting concerns
+- ´Be sure to read relevant llm files in the @llm folder`
+
+** Repomix
+#+begin_src bash
+# Generate with repomix
+for app in src/apps/*; do
+  appname=$(basename $app)
+  repomix --include "$app/**" --style markdown \
+    --output "repomix-$appname.md"
+  claude -p -c "Read @repomix-$appname.md then follow \
+    instructions in @llm/how_to_document_an_app.md and \
+    generate llm/$appname.md"
+done
 #+end_src
 
-** Examples
-- Auto-format on save
-- Type-check on edit
-- Block commits until tests pass
-- Lint before push
+** Cross cutting concerns
+#+begin_src markdown
+Dear Claude:
 
-* Advanced: Workflow Command
+- please read all the app documentation files in @llm/ and research cross-cutting concerns
+- update each llm/[app].md file with these details
+#+end_src
+
+
+* Workflow Command
 ** Talk
 - Worktrees over branch switching
 - Each task gets isolated directory
@@ -320,15 +260,13 @@ worktree-setup-full:
     # ... copy all non-code assets
 #+end_src
 
-* Building a Feature
-** Exploration and Research
-*** Talk
+* Exploration and Research
 - Make Claude use a lot of tokens
 - Great way to refresh your own understanding
 - Follow up for additional details
 - Stepwise approach makes good todo items
 
-*** Claude
+** Prompt
 #+begin_src markdown
 Hi Claude, let's start by researching how [TOPIC] works in the system.
 
@@ -346,7 +284,7 @@ After that, reference relevant classes in [LONG_FILE] and do additional research
 Finally, summarize your findings.
 #+end_src
 
-*** Tooling
+** Tooling
 #+begin_src bash
 # Get absolute paths for files
 $ realpath [file1] [file2]
@@ -377,15 +315,14 @@ $ realpath [file1] [file2]
       (message "Copied %d visible buffer paths" (length (split-string paths-str "\n" t))))))
 #+end_src
 
-** Planning
-*** Talk
+* Planning
 - What are we building?
 - How will we build it?
 - Ask for questions and answer them
 - Don't use plan mode
 - "Don't code"
 
-*** Claude
+** Prompt
 #+begin_src markdown
 Today we are building [FEATURE]. I'm thinking we use this overall approach:
 
@@ -406,13 +343,12 @@ Great questions, I'm thinking the following:
 Sounds good?
 #+end_src
 
-** Build the Root
-*** Talk
+* Build the Root
 - Very precise language
 - Function names and definitions
 - Which files are we working in
 - We are building the foundational hard parts
-*** Claude
+** Prompt
 #+begin_src markdown
 Let's build the core foundation. We'll work in these files:
 - [FILE_1]
@@ -436,21 +372,20 @@ SomeClass:
 Use the pinspect tool to do adhoc checks of functionality as we go along.
 #+end_src
 
-*** Feel
+** Feel
 - I'm in control
 - I'm not surprised by the output
 - Great input → Great output
 - With these instructions, I could build this
 
-** Build the Leaves
-*** Talk
+* Build the Leaves
 - High-level requirements
 - Let Claude use its knowledge
 - Trust the LLM with implementation details
 - Great for boilerplate, UI, CRUD, admin interfaces
 - We know what we want, not how to build it
 
-*** Claude
+** Prompt
 #+begin_src markdown
 Now let's add the admin interface for [MODEL_NAME]. It should have:
 - All the standard fields visible
@@ -461,64 +396,14 @@ Now let's add the admin interface for [MODEL_NAME]. It should have:
 Also add a [UI_COMPONENT] that displays [DATA] with sorting and pagination. Make it look good and follow the patterns used elsewhere in the project.
 #+end_src
 
-*** Feel
+** Feel
 - I'm delegating the details
 - Claude knows the conventions better than I do
 - I trust the output will be sensible
 - This is what LLMs are great at
 
-** Cleanup
-*** Talk
-- Remove LLM idioms and artifacts
-- Make code look human-written
-- Follow project conventions
-- This is professional polish
-
-*** Claude
-#+begin_src markdown
-Please clean up the code we just wrote:
-
-- Move all imports to the top of the file
-- Remove "before/after" style comments
-- Remove placeholder comments like "TODO" or "FIXME" that we've already implemented
-- Delete any commented-out old code
-- Remove overly verbose comments that explain obvious things
-- Consolidate any duplicate code
-- Make sure formatting matches the rest of the project
-
-Keep the code functionally identical, just make it look production-ready.
-#+end_src
-
-*** Feel
-- This makes it feel like my code
-- Ready to commit
-- No evidence of LLM artifacts
-
-** Ship It
-*** Talk
-- Commit, push, update tracking, communicate
-- Automate the ceremony
-- Close the loop with stakeholders
-- One command to finish everything
-
-*** Claude
-#+begin_src markdown
-Please commit and push the changes, then update [PROJECT_MANAGEMENT_TOOL] issue [ISSUE_ID] with the progress, and send a status email to [STAKEHOLDERS].
-
-For the issue update:
-- Mark the relevant tasks as complete
-- Add a comment summarizing what was implemented
-- Update the status if needed
-
-For the email:
-- Brief summary of what was done
-- Link to the commit/PR
-- Any relevant notes or next steps
-#+end_src
-
-*** Tooling
+* Commit
 #+begin_src bash
-# Automated commit, push, and communication
 clg() {
     unset ANTHROPIC_API_KEY
     claude -p -c "Your task is to commit and push ONLY the uncommitted changes in this git repository.
@@ -552,8 +437,34 @@ IMPORTANT TOOL RESTRICTIONS:
 }
 #+end_src
 
-*** Feel
-- Everything is wrapped up in one go
-- Stakeholders are informed
-- Ready to move to the next task
-- No manual ceremony
+* Cleanup
+- Remove LLM idioms and artifacts
+
+** Prompt
+#+begin_src markdown
+Please clean up the code we just wrote:
+
+- Move all imports to the top of the file
+- Remove "before/after" style comments
+- Remove placeholder comments like "TODO" or "FIXME" that we've already implemented
+- Delete any commented-out old code
+- Remove overly verbose comments that explain obvious things
+- Consolidate any duplicate code
+- Make sure formatting matches the rest of the project
+
+Keep the code functionally identical, just make it look production-ready.
+#+end_src
+
+** Feel
+- This makes it feel like my code
+- Ready to commit
+- No evidence of LLM artifacts
+
+* Get feedback
+- Compose email
+- Update issue
+- Ping stakeholders on slack
+
+* Ship It
+- Merge PR
+- Update and close issue
