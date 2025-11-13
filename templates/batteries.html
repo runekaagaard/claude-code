@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--#include virtual="_slide-grid-start.html" -->
+            <h1 class="text-4xl font-bold text-gray-900 leading-tight">{{ title }}</h1>
+<!--#include virtual="_slide-grid-middle.html" -->
+            <div class="grid grid-cols-4 gap-3">
+                {% for item in items %}
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-3 hover:border-claude-orange transition-colors">
+                    <h3 class="font-bold text-base text-claude-orange mb-1">{{ item.name }}</h3>
+                    <div class="text-xs text-gray-600">{{ item.description }}</div>
+                </div>
+                {% endfor %}
+            </div>
+<!--#include virtual="_slide-grid-end.html" -->
+{% endblock %}

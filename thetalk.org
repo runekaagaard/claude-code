@@ -2,7 +2,7 @@
 Claude Code in Practice
 Making It Work on Large Projects
 
-* From Scissors to Shipping Code
+* Evolution
 - 1920 Physical cut-up method with scissors
 - 1995 Verbasizer 2.0 digital randomization
 - 2019 AI Dungeon interactive text generation
@@ -18,14 +18,14 @@ Making It Work on Large Projects
 - Composer & Pianist
 - Dragør
 
-** runekaagaard@github
+** GitHub
 - https://github.com/runekaagaard
 - https://github.com/runekaagaard/mcp-alchemy - Relational Databases 
 - https://github.com/runekaagaard/mcp-redmine) - Redmine Project Management
 - https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
 - hypergen.it - Django Liveview
 
-** This Talk
+** Talk
 - Building features fast without losing control
 - MCP servers: Your tools become Claude's tools
 - Worktrees and workflows for parallel development
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     mcp.run()
 #+end_src
 
-** mcp_config.json
+** Config
 #+begin_src json
 {
   "mcpServers": {
@@ -131,14 +131,14 @@ if __name__ == "__main__":
 }
 #+end_src
 
-** What's a good MCP server?
+** Good Server
 - As few tools as possible
 - Add discoverability to existing programs
 - Don't change the documentation, just change the tool
 - Change interface to something the model likes
 - OpenAPI's are great
 
-** MCP Server API examples
+** Strategies
 | Operation  | MCP Alchemy        | Notmuch Sendmail      | Redmine        |
 |------------+--------------------+-----------------------+----------------|
 | Discovery  | all_table_names    | find_email_thread     | paths_list     |
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 - Tech stack, modules, conventions, where to find things
 - Don't use directory CLAUDE.md's
 
-** llm/[app1.md,app2.md,...]
+** LLM
 - Full source too big for context
 - Document each app separately, then add cross cutting concerns
 - Module-specific documentation
@@ -181,7 +181,7 @@ for app in src/apps/*; do
 done
 #+end_src
 
-** Cross cutting concerns
+** Cross Cutting
 #+begin_src markdown
 Dear Claude:
 
@@ -189,7 +189,7 @@ Dear Claude:
 - update each llm/[app].md file with these details
 #+end_src
 
-* Development Setup
+* Dev Setup
 - What makes developers happy makes Claude effective
 - Fast dev environment creation
 - Local databases with real data
@@ -203,7 +203,7 @@ Dear Claude:
 - Each task gets isolated directory
 - Work on multiple features simultaneously
 
-** Create worktree
+** Create Worktree
 #+begin_src bash
 git worktree add -b mybranch ~/worktrees/mybranch origin/main
 cd ~/worktrees/mybranch
@@ -211,6 +211,7 @@ git commit --allow-empty -m "Initial commit"
 git push -u origin mybranch
 #+end_src
 
+** Workspace Creation
 #+begin_src bash
 # Makefile
 worktree-setup-symlink:
@@ -222,14 +223,8 @@ worktree-setup-symlink:
 claude-terminator-workspace ~/worktrees/1234_mybranch/
 #+end_src
 
-** Multiple Claude Code's
-- Tmux
-- Scripted terminal
-- Web UI
-- Terminal wrappers
 
-
-* Lets start building stuff
+* Start Building
 #+begin_src bash
 # New claude session
 cl() {
@@ -279,7 +274,7 @@ Please process these instructions: $ARGUMENTS
 - PR: [PR_URL]
 - Worktree: ~/worktrees/[BRANCH_NAME]
 
-* Exploration and Research
+* Exploration
 - Make Claude use a lot of tokens
 - Great way to refresh your own understanding
 - Follow up for additional details
@@ -363,7 +358,7 @@ Great questions, I'm thinking the following:
 Sounds good? Let's see the code.
 #+end_src
 
-* Build the Root
+* Build Root
 - Very precise language
 - Function names and definitions
 - Which files are we working in
@@ -395,7 +390,7 @@ RateWindow:
 - I'm not surprised by the output
 - With these instructions, I could build this myself
 
-* Build the Leaves
+* Build Leaves
 - Context is now great
 - Fill in the blanks
 - Let Claude do its thing
