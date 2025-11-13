@@ -1,6 +1,6 @@
 * [CLAUDE: Title type slide]
 Claude Code in Practice
-Making It Work on Real Projects
+Making It Work on Large Projects
 
 * From Scissors to Shipping Code
 - 1920 Physical cut-up method with scissors
@@ -14,11 +14,12 @@ Making It Work on Real Projects
 ** Rune Kaagaard
 - CTO Prescriba
 - Psychological/Pshyatrictric services
-- 50.000 Clients / year
-- Composer/Pianist
+- 50.000 Clients/year
+- Composer & Pianist
 - Dragør
 
 ** runekaagaard@github
+- https://github.com/runekaagaard
 - https://github.com/runekaagaard/mcp-alchemy - Relation Databases 
 - https://github.com/runekaagaard/mcp-redmine) - Redmine Project Management
 - https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
@@ -147,14 +148,13 @@ if __name__ == "__main__":
 * Documentation
 ** CLAUDE.md
 - Project instructions that persists across sessions
-- Hierarchical: global → project → directory
-- Tech stack, commands, architecture, conventions
+- Tech stack, modules, conventions, where to find things
 - Don't use directory CLAUDE.md's
 
 ** llm/[app1.md,app2.md,...]
 - Module-specific documentation
 - Cross-cutting concerns
-- ´Be sure to read relevant llm files in the @llm folder`
+- "Be sure to read relevant llm files in the @llm folder"
 
 ** Repomix
 #+begin_src bash
@@ -177,87 +177,73 @@ Dear Claude:
 - update each llm/[app].md file with these details
 #+end_src
 
+* Development setup
+- Fast dev environment creation
+- Local anonymized databases
+- Tests
 
-* Workflow Command
+** Worktrees
+- Claude Code conversations are directory specific
 - Worktrees over branch switching
 - Each task gets isolated directory
-- No context switching overhead
 - Work on multiple features simultaneously
 
-** Command
+** Create worktree
+#+begin_src bash
+git worktree add -b mybranch ~/worktrees/mybranch origin/main
+cd ~/worktrees/mybranch
+git commit --allow-empty -m "Initial commit"
+git push -u origin mybranch
+#+end_src
+
+** Workspace creation
+- Tmux
+- Scripted terminal
+- Web UI
+- Terminal wrappers
+
+** Workspace creation 2
+#+begin_src bash
+# Makefile
+worktree-setup-symlink:
+    ln -sf ~/main/node_modules .
+    ...
+#+end_src
+
+#+begin_src bash
+claude-terminator-workspace ~/worktrees/1234_mybranch/
+#+end_src
+
+** /issue command
 #+begin_src markdown
 ---
-description: Manage issues, branches, and PRs with worktrees
+description: Manage issues, branches, PR's, worktrees and workspaces
 ---
 
-Handle workflow: $ARGUMENTS
+Please process these instructions: $ARGUMENTS
 
-## Actions
+# Issues
 
-Parse intent:
-- "r560" → Create worktree for existing branch
-- "branch r555" → Create branch + worktree for existing issue
-- "new [title]" → Create issue + branch + worktree
-- "pr" → Create pull request
-- "close" → Close workflow
+- Use the redmine tools
+- The issue id is in the branch name
 
-## Configuration
+# Branches
+...
 
-- Branch: [num]_[name]_r[issue]
-- Worktree: ~/worktrees/[branch]
-- PR title: [title] r[issue]
-- Default: Always create worktrees, never switch branches
-
-## Worktree Setup
-
-```bash
-git worktree add -b BRANCH ~/worktrees/BRANCH origin/master
-cd ~/worktrees/BRANCH
-git commit --allow-empty -m "Initial commit rISSUE"
-git push -u origin BRANCH
-```
+...
 
 ## Output
 
-```
 ✅ Created:
 - Issue #[NUM]: [TITLE]
   [ISSUE_URL]
 - Branch: [BRANCH]
+- [PR_URL]
 - Worktree: ~/worktrees/[BRANCH]
-```
 
-## Workspace Setup
-
-Optional: "setup workspace" or "terminator workspace"
-
-Creates terminal layout with:
-- Claude CLI (with --continue for session persistence)
-- Git status display
-- Dev server (auto-detects free port)
-- Asset watcher (auto-detects free port)
-- Tab titled with branch name
-
-Everything ready to start coding immediately.
-#+end_src
-
-** Tooling
-#+begin_src Makefile
-# Symlink approach (fast, shares resources)
-worktree-setup-symlink:
-    ln -sf ~/main/node_modules .
-    ln -sf ~/main/settings_local.py settings_local.py
-    ln -sf ~/main/media/ media
-    ln -sf ~/main/webpack-stats.json .
-    # ... symlink all non-code assets
-
-# Full copy approach (isolated, slower)
-worktree-setup-full:
-    rsync -a ~/main/node_modules/ node_modules/
-    cp ~/main/settings_local.py settings_local.py
-    rsync -a ~/main/media/ media/
-    cp ~/main/webpack-stats.json .
-    # ... copy all non-code assets
+* Lets start building stuff
+#+begin_src makedown
+/issue Please create a new issue for: My Awesome New Feature
 #+end_src
 
 * Exploration and Research
@@ -279,12 +265,12 @@ Then read these core files in full:
 - @[FILE_1]
 - @[FILE_2]
 
-After that, reference relevant classes in [LONG_FILE] and do additional research as needed.
+After that, reference relevant functions in [LONG_FILE] and do additional research as needed.
 
 Finally, summarize your findings.
 #+end_src
 
-** Tooling
+** Realpath
 #+begin_src bash
 # Get absolute paths for files
 $ realpath [file1] [file2]
@@ -340,7 +326,7 @@ Great questions, I'm thinking the following:
 2. [ANSWER_2]
 3. [ANSWER_3]
 
-Sounds good?
+Sounds good? Let's see the code.
 #+end_src
 
 * Build the Root
@@ -348,28 +334,26 @@ Sounds good?
 - Function names and definitions
 - Which files are we working in
 - We are building the foundational hard parts
+- "Keep it simple, zen and to the point"
 ** Prompt
 #+begin_src markdown
 Let's build the core foundation. We'll work in these files:
 - [FILE_1]
 - [FILE_2]
 
-Create a function `[function_name]([param1]: [Type1], [param2]: [Type2]) -> [ReturnType]` that:
-1. [SPECIFIC_BEHAVIOR_1]
-2. [SPECIFIC_BEHAVIOR_2]
-3. [SPECIFIC_BEHAVIOR_3]
+Create a function 
 
-Then add a class `[ClassName]` with these methods:
-- `[method1]()`: [PRECISE_DESCRIPTION]
-- `[method2]()`: [PRECISE_DESCRIPTION]
+def function_name([param1]: [Type1], [param2]: [Type2]) -> [ReturnType] 
+
+that ...
+
+...
 
 Uh, and we'll need datastructures as well. Please suggest better names, labels and help texts for these before coding the solution.
 
 SomeClass:
    [field1] - int
    [field2] - text, nullable
-
-Use the pinspect tool to do adhoc checks of functionality as we go along.
 #+end_src
 
 ** Feel
@@ -379,11 +363,11 @@ Use the pinspect tool to do adhoc checks of functionality as we go along.
 - With these instructions, I could build this
 
 * Build the Leaves
-- High-level requirements
+- Context is now great
+- Fill in the blanks
 - Let Claude use its knowledge
 - Trust the LLM with implementation details
 - Great for boilerplate, UI, CRUD, admin interfaces
-- We know what we want, not how to build it
 
 ** Prompt
 #+begin_src markdown
@@ -398,7 +382,7 @@ Also add a [UI_COMPONENT] that displays [DATA] with sorting and pagination. Make
 
 ** Feel
 - I'm delegating the details
-- Claude knows the conventions better than I do
+- Reaping the benefits of our structured approach
 - I trust the output will be sensible
 - This is what LLMs are great at
 
