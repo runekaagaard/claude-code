@@ -123,12 +123,22 @@ def parse_org_file(org_path):
             # Section with body AND children - create intro slide
             elif has_body and node.children:
                 bullets = extract_bullets(node.body)
-                slide = {
-                    'title': clean_heading,
-                    'content': bullets,
-                    'template': 'bullets',
-                    'filename': f"{section_slug}.html",
-                }
+                code_blocks = extract_code_blocks(node.body)
+
+                if code_blocks:
+                    slide = {
+                        'title': clean_heading,
+                        'code_blocks': code_blocks,
+                        'template': 'code',
+                        'filename': f"{section_slug}.html",
+                    }
+                else:
+                    slide = {
+                        'title': clean_heading,
+                        'content': bullets,
+                        'template': 'bullets',
+                        'filename': f"{section_slug}.html",
+                    }
                 slides.append(slide)
 
             # Process subsections
