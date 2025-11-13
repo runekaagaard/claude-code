@@ -26,7 +26,10 @@ Making It Work on Large Projects
 - hypergen.it - Django Liveview
 
 ** This Talk
-[CLAUDE: Insert relevant topics here]
+- Building features fast without losing control
+- MCP servers: Your tools become Claude's tools
+- Worktrees and workflows for parallel development
+- Root to leaves: Foundation first, details last
 
 * [CLAUDE: Title type slide]
 npm install -g @anthropic-ai/claude-code
@@ -272,9 +275,9 @@ Please process these instructions: $ARGUMENTS
 ✅ Created:
 - Issue #[NUM]: [TITLE]
   [ISSUE_URL]
-- Branch: [BRANCH]
-- [PR_URL]
-- Worktree: ~/worktrees/[BRANCH]
+- Branch: [BRANCH_NAME]
+- PR: [PR_URL]
+- Worktree: ~/worktrees/[BRANCH_NAME]
 
 * Exploration and Research
 - Make Claude use a lot of tokens
@@ -284,18 +287,18 @@ Please process these instructions: $ARGUMENTS
 
 ** Prompt
 #+begin_src markdown
-Hi Claude, let's start by researching how [TOPIC] works in the system.
+Hi Claude, let's start by researching how rate limiting works in the system.
 
 First read:
-- The current issue in [PROJECT MANAGEMENT TOOL]
+- The current issue in Redmine
 - Any referenced emails
 - Relevant documentation in the @llm folder
 
 Then read these core files in full:
-- @[FILE_1]
-- @[FILE_2]
+- @src/middleware/ratelimit.py
+- @src/models/api_key.py
 
-After that, reference relevant functions in [LONG_FILE] and do additional research as needed.
+After that, reference relevant functions in src/cache/redis_client.py and do additional research as needed.
 
 Finally, summarize your findings.
 #+end_src
@@ -341,11 +344,11 @@ $ realpath [file1] [file2]
 
 ** Prompt
 #+begin_src markdown
-Today we are building [FEATURE]. I'm thinking we use this overall approach:
+Today we are replacing the old rate limiter with Redis HyperLogLog counting. I'm thinking we use this overall approach:
 
-- [STEP_1]
-- [STEP_2]
-- [STEP_3]
+- Use PFCOUNT for approximate unique IP counting per window
+- Store window metadata in Django models
+- Celery task to persist stats every hour
 
 Any questions? Feel free to do additional research before we start coding.
 #+end_src
@@ -353,9 +356,9 @@ Any questions? Feel free to do additional research before we start coding.
 #+begin_src markdown
 Great questions, I'm thinking the following:
 
-1. [ANSWER_1]
-2. [ANSWER_2]
-3. [ANSWER_3]
+1. Yes, 1% error rate on HyperLogLog is fine for rate limiting
+2. Keep the last 24 hours of windows in the database
+3. The Celery task just reads from Redis and writes to the DB
 
 Sounds good? Let's see the code.
 #+end_src
@@ -369,22 +372,21 @@ Sounds good? Let's see the code.
 ** Prompt
 #+begin_src markdown
 Let's build the core foundation. We'll work in these files:
-- [FILE_1]
-- [FILE_2]
+- src/ratelimit/counter.py
+- src/models/rate_window.py
 
-Please create a function 
+Please create a function
 
-def myfunc(a: str, b: int) -> list
+def check_rate_limit(key: str, limit: int, window_seconds: int) -> bool
 
-that works like this: ...
-
-...
+that uses Redis PFADD and PFCOUNT for approximate counting.
 
 Uh, and we'll need datastructures as well. Please suggest better names, labels and help texts for these before coding the solution.
 
-SomeClass:
-   foo - int
-   bar - text, nullable
+RateWindow:
+   redis_key - str
+   count - int (approximate)
+   started_at - datetime
 #+end_src
 
 ** Feel
@@ -396,20 +398,20 @@ SomeClass:
 * Build the Leaves
 - Context is now great
 - Fill in the blanks
-- Let Claude do it's thing
+- Let Claude do its thing
 - Trust the LLM with implementation details
 - Great for boilerplate, UI, CRUD, admin interfaces
 - Read PR and give feedback
 
 ** Prompt
 #+begin_src markdown
-Now let's add the admin interface for [MODEL_NAME]. It should have:
+Now let's add the admin interface for RateWindow. It should have:
 - All the standard fields visible
-- Filters for [FIELD_1] and [FIELD_2]
+- Filters for started_at and redis_key patterns
 - Search functionality
-- The usual inline editing for related [RELATED_MODEL]
+- Read-only fields since this is historical data
 
-Also add a [UI_COMPONENT] that displays [DATA] with sorting and pagination. Make it look good and follow the patterns used elsewhere in the project.
+Also add a RateWindowChart that displays the last 24 hours with sorting and pagination. Make it look good and follow the patterns used elsewhere in the project.
 #+end_src
 
 ** Feel

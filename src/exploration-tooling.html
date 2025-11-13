@@ -23,15 +23,27 @@ $ realpath [file1] [file2]</code></pre>
 
                 <div class="bg-gray-100 border border-gray-200 rounded-2xl p-6">
                     <pre class="leading-relaxed text-gray-700"><code>(defun rk-realpath ()
-  "Copy full path of current buffer"
+  "Copy the full path of current buffer to kill ring"
   (interactive)
   (kill-new (buffer-file-name))
   (message "Copied: %s" (buffer-file-name)))
 
 (defun rk-realpath-visible-buffers ()
-  "Copy paths of all visible buffers"
+  "Copy a newline separated list of full paths of visible buffers to kill ring."
   (interactive)
-  ...)</code></pre>
+  (let ((paths '()))
+    ;; Collect paths from all visible buffers
+    (dolist (frame (frame-list))
+      (dolist (window (window-list frame))
+        (let* ((buffer (window-buffer window))
+               (path (buffer-file-name buffer)))
+          (when path
+            (push path paths)))))
+
+    ;; Create newline separated string and kill it
+    (let ((paths-str (mapconcat #'identity (delete-dups (nreverse paths)) "\n")))
+      (kill-new paths-str)
+      (message "Copied %d visible buffer paths" (length (split-string paths-str "\n" t))))))</code></pre>
                 </div>
             </div>
         </div>

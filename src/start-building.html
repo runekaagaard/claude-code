@@ -11,7 +11,27 @@
 
     <!-- Right Content Area -->
     <div class="pt-4">
-        <div class="w-full">
+        <div class="w-full space-y-8">
+            <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
+                <pre class="leading-relaxed text-gray-800 text-xl"><code># New claude session
+cl() {
+   unset ANTHROPIC_API_KEY
+   claude --mcp-config ~/claude_code_config.json "$@"
+}
+
+# Continue claude session
+clc() {
+   unset ANTHROPIC_API_KEY
+   claude --continue --mcp-config ~/claude_code_config.json "$@"
+}
+
+# Project manager
+clp() {
+   unset ANTHROPIC_API_KEY
+   claude --continue --add-dir ~/worktrees --mcp-config ~/claude_code_config.json "$@"
+}</code></pre>
+            </div>
+
             <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
                 <pre class="leading-relaxed text-gray-800 text-xl"><code>/issue Please create a new issue for: My Awesome New Feature</code></pre>
             </div>

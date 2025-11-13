@@ -16,29 +16,25 @@
             <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
                 <pre class="leading-relaxed text-gray-800"><code>Let's build the core foundation. We'll work
 in these files:
-- [FILE_1]
-- [FILE_2]
+- src/ratelimit/counter.py
+- src/models/rate_window.py
 
-Create a function `[function_name]([param1]: [Type1],
-[param2]: [Type2]) -> [ReturnType]` that:
-1. [SPECIFIC_BEHAVIOR_1]
-2. [SPECIFIC_BEHAVIOR_2]
-3. [SPECIFIC_BEHAVIOR_3]
+Please create a function
 
-Then add a class `[ClassName]` with these methods:
-- `[method1]()`: [PRECISE_DESCRIPTION]
-- `[method2]()`: [PRECISE_DESCRIPTION]
+def check_rate_limit(key: str, limit: int,
+                     window_seconds: int) -> bool
+
+that uses Redis PFADD and PFCOUNT for
+approximate counting.
 
 Uh, and we'll need datastructures as well.
 Please suggest better names, labels and help
 texts for these before coding the solution.
 
-SomeClass:
-   [field1] - int
-   [field2] - text, nullable
-
-Use the pinspect tool to do adhoc checks of
-functionality as we go along.</code></pre>
+RateWindow:
+   redis_key - str
+   count - int (approximate)
+   started_at - datetime</code></pre>
             </div>
         </div>
     </div>

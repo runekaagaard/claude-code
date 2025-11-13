@@ -15,18 +15,18 @@
         <div class="w-full">
             <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
                 <pre class="leading-relaxed text-gray-800"><code>Now let's add the admin interface for
-[MODEL_NAME]. It should have:
+RateWindow. It should have:
 
 - All the standard fields visible
-- Filters for [FIELD_1] and [FIELD_2]
+- Filters for started_at and redis_key patterns
 - Search functionality
-- The usual inline editing for related
-  [RELATED_MODEL]
+- Read-only fields since this is historical
+  data
 
-Also add a [UI_COMPONENT] that displays [DATA]
-with sorting and pagination. Make it look good
-and follow the patterns used elsewhere in the
-project.</code></pre>
+Also add a RateWindowChart that displays the
+last 24 hours with sorting and pagination.
+Make it look good and follow the patterns used
+elsewhere in the project.</code></pre>
             </div>
         </div>
     </div>

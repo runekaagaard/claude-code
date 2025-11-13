@@ -16,9 +16,12 @@
             <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
                 <pre class="leading-relaxed text-gray-800"><code>Great questions, I'm thinking the following:
 
-1. [ANSWER_1]
-2. [ANSWER_2]
-3. [ANSWER_3]
+1. Yes, 1% error rate on HyperLogLog is fine
+   for rate limiting
+2. Keep the last 24 hours of windows in the
+   database
+3. The Celery task just reads from Redis and
+   writes to the DB
 
 Sounds good? Let's see the code.</code></pre>
             </div>

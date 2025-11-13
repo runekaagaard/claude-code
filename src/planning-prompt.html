@@ -14,12 +14,14 @@
     <div class="pt-4">
         <div class="w-full">
             <div class="bg-gray-100 border border-gray-200 rounded-2xl p-8">
-                <pre class="leading-relaxed text-gray-800"><code>Today we are building [FEATURE]. I'm thinking
+                <pre class="leading-relaxed text-gray-800"><code>Today we are replacing the old rate limiter
+with Redis HyperLogLog counting. I'm thinking
 we use this overall approach:
 
-- [STEP_1]
-- [STEP_2]
-- [STEP_3]
+- Use PFCOUNT for approximate unique IP
+  counting per window
+- Store window metadata in Django models
+- Celery task to persist stats every hour
 
 Any questions? Feel free to do additional
 research before we start coding.</code></pre>
