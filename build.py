@@ -65,6 +65,10 @@ def parse_grid_items(body):
     if not body:
         return []
 
+    # Check if this looks like grid items (not URLs)
+    if 'http://' in body or 'https://' in body:
+        return []
+
     items = []
     for line in body.strip().split('\n'):
         line = line.strip()
