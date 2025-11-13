@@ -162,23 +162,6 @@ def parse_org_file(org_path):
                                 'filename': filename,
                             }
                             slides.append(slide)
-                        elif code_blocks and len(code_blocks) > 1:
-                            # Multiple code blocks - split into separate slides
-                            for block_idx, code_block in enumerate(code_blocks):
-                                if block_idx == 0:
-                                    block_filename = filename
-                                else:
-                                    base = filename.replace('.html', '')
-                                    block_filename = f"{base}-{block_idx + 1}.html"
-
-                                slide = {
-                                    'title': clean_heading,
-                                    'subtitle': child_heading,
-                                    'code_blocks': [code_block],
-                                    'template': 'code',
-                                    'filename': block_filename,
-                                }
-                                slides.append(slide)
                         elif code_blocks:
                             # Single code block
                             slide = {
