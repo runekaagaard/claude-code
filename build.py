@@ -9,7 +9,6 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 import re
 
-
 def slugify(text):
     """Convert text to filename"""
     text = re.sub(r'[^\w\s-]', '', text)
@@ -17,12 +16,10 @@ def slugify(text):
     text = re.sub(r'-+', '-', text)
     return text.strip('-')
 
-
 def autolink_urls(html):
     """Convert plain URLs to <a> tags"""
     url_pattern = r'(?<!href=")(?<!src=")(https?://[^\s<]+)'
     return re.sub(url_pattern, r'<a href="\1" class="text-claude-orange hover:underline">\1</a>', html)
-
 
 def org_body_to_html(body):
     """Convert org-mode body to styled HTML"""
@@ -39,17 +36,13 @@ def org_body_to_html(body):
     html = re.sub(
         r'<pre[^>]*>(.*?)</pre>',
         r'<div class="bg-gray-100 border border-gray-200 rounded-2xl p-6"><pre class="leading-relaxed text-gray-800">\1</pre></div>',
-        html,
-        flags=re.DOTALL
-    )
+        html, flags=re.DOTALL)
 
     # Wrap tables in styled divs
     html = re.sub(
         r'<table>(.*?)</table>',
         r'<div class="bg-gray-100 border border-gray-200 rounded-2xl p-6"><table class="w-full text-lg">\1</table></div>',
-        html,
-        flags=re.DOTALL
-    )
+        html, flags=re.DOTALL)
 
     # Add table styling
     html = html.replace('<thead>', '<thead class="border-b-2 border-gray-300">')
@@ -58,7 +51,6 @@ def org_body_to_html(body):
     html = html.replace('<td>', '<td class="py-2 px-3 align-top">')
 
     return html
-
 
 def parse_grid_items(body):
     """Parse grid items (format: - Name: Description)"""
@@ -79,7 +71,6 @@ def parse_grid_items(body):
                 items.append({'name': parts[0].strip(), 'description': parts[1].strip()})
 
     return items
-
 
 def parse_images_property(images_prop):
     """Parse IMAGES property: img1.jpg|Caption 1;img2.jpg|Caption|Subcaption"""
@@ -108,7 +99,6 @@ def parse_images_property(images_prop):
 
     return images
 
-
 def convert_timeline_to_html(body):
     """Convert org bullets with years to timeline HTML"""
     if not body:
@@ -123,17 +113,14 @@ def convert_timeline_to_html(body):
             match = re.match(r'^(\d{4}s?)\s+(.+)$', content)
             if match:
                 year, text = match.groups()
-                html_parts.append(
-                    f'<div class="flex items-start gap-4">'
-                    f'<span class="text-claude-orange font-bold min-w-[5rem]">{year}</span>'
-                    f'<p>{text}</p>'
-                    f'</div>'
-                )
+                html_parts.append(f'<div class="flex items-start gap-4">'
+                                  f'<span class="text-claude-orange font-bold min-w-[5rem]">{year}</span>'
+                                  f'<p>{text}</p>'
+                                  f'</div>')
             else:
                 html_parts.append(f'<p>{content}</p>')
 
     return '\n'.join(html_parts)
-
 
 def process_node(node, parent_slug='', is_first_child=False):
     """Process a single org node and return slide data"""
@@ -225,7 +212,6 @@ def process_node(node, parent_slug='', is_first_child=False):
 
     return slides
 
-
 def parse_org_file(org_path):
     """Parse org file and extract slides"""
     root = orgparse.load(org_path)
@@ -247,11 +233,9 @@ def parse_org_file(org_path):
 
     return slides
 
-
 def build_slides(slides, output_dir):
     """Generate HTML files"""
     output_path = Path(output_dir)
-    output_path.mkdir(exist_ok=True)
 
     env = Environment(loader=FileSystemLoader('templates'))
     filenames = [slide['filename'] for slide in slides]
@@ -259,8 +243,8 @@ def build_slides(slides, output_dir):
     for i, slide in enumerate(slides):
         template = env.get_template(f"{slide['template']}.html")
 
-        slide['prev'] = filenames[i-1] if i > 0 else None
-        slide['next'] = filenames[i+1] if i < len(filenames) - 1 else None
+        slide['prev'] = filenames[i - 1] if i > 0 else None
+        slide['next'] = filenames[i + 1] if i < len(filenames) - 1 else None
         slide['all_slides'] = filenames
 
         html = template.render(**slide)
@@ -270,17 +254,10 @@ def build_slides(slides, output_dir):
     index_template = env.get_template('index.html')
     index_html = index_template.render(
         slides=[(s.get('title', s.get('subtitle', 'Slide')), s['filename']) for s in slides],
-        first_slide=filenames[0] if filenames else 'index.html'
-    )
+        first_slide=filenames[0] if filenames else 'index.html')
     (output_path / 'index.html').write_text(index_html)
 
-    # Copy styles
-    import shutil
-    if Path('src/styles.css').exists():
-        shutil.copy('src/styles.css', output_path / 'styles.css')
-
     print(f"✓ Built {len(slides)} slides")
-
 
 if __name__ == '__main__':
     slides = parse_org_file('thetalk.org')
