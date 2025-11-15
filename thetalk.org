@@ -86,10 +86,7 @@ claude
 
 ** What Actually Reaches the LLM
 #+begin_src xml
-<!-- API Request: JSON → XML → Tokenizer → H100 GPUs -->
-<!-- ~307KB, 33,606 tokens, 80.9% cached, $0.137/request -->
-
-<system cache_control="ephemeral">
+<system>
 You are Claude Code, Anthropic's official CLI for Claude.
 
 # Tone and style
@@ -97,9 +94,7 @@ You are Claude Code, Anthropic's official CLI for Claude.
 - Output will be displayed on a command line interface
 
 [...instructions ~12KB total...]
-</system>
 
-<system cache_control="ephemeral">
 <env>
 Working directory: /home/user/projects/webapp
 Platform: linux
@@ -111,23 +106,31 @@ Status: M src/auth/password.py
 
 <tools>
 <!-- 41 built-in tools -->
-<tool name="Bash"><description>Execute shell commands</description></tool>
-<tool name="Read"><description>Read files, images, PDFs</description></tool>
+<tool name="Read">
+  <description>Read files, images, PDFs, Jupyter notebooks</description>
+  <parameters>
+    <parameter name="file_path" type="string" required="true">
+      The absolute path to the file to read
+    </parameter>
+    <parameter name="limit" type="number" required="false">
+      The number of lines to read. Only provide if file is too large.
+    </parameter>
+    <parameter name="offset" type="number" required="false">
+      The line number to start reading from
+    </parameter>
+  </parameters>
+</tool>
 <tool name="Edit"><description>Exact string replacements</description></tool>
 <tool name="Write"><description>Write or overwrite files</description></tool>
 <tool name="Grep"><description>Search code with ripgrep</description></tool>
-<tool name="Glob"><description>Find files by pattern</description></tool>
-<tool name="Task"><description>Launch specialized agents</description></tool>
-<!-- ... 34 more tools ... -->
+<tool name="Bash"><description>Execute shell commands</description></tool>
+<!-- ... 36 more tools ... -->
 
 <!-- 14 MCP server tools -->
 <tool name="mcp__db_mysql__execute_query">
   <description>Execute SQL query with param substitution</description>
 </tool>
-<tool name="mcp__email__compose_new_email">
-  <description>Compose email from markdown</description>
-</tool>
-<!-- ... 12 more MCP tools ... -->
+<!-- ... 13 more MCP tools ... -->
 </tools>
 </system>
 
@@ -142,14 +145,7 @@ Contents of /home/user/projects/webapp/CLAUDE.md:
 [...6,000+ lines of documentation...]
 </system-reminder>
 
-<image>
-  <source type="base64" media_type="image/png">
-    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==
-  </source>
-</image>
-
-I'm seeing this error in my browser. Can you fix the password hashing
-vulnerability in src/auth/password.py that's causing it?
+Fix the password hashing vulnerability in src/auth/password.py
 </message>
 
 <message role="assistant">
@@ -201,6 +197,31 @@ def hash_password(password: str) -> str:
 </tool_use>
 </message>
 </conversation>
+#+end_src
+
+** Transformer Input
+#+begin_src text
+ACTUAL TRANSFORMER INPUT SEQUENCE
+
+Position │ Token Type │ Embedding (768-d vector, showing first 8 dims)
+─────────┼────────────┼────────────────────────────────────────────────
+0        │ text       │ [ 0.234, -0.891,  0.456, -0.123,  0.678, -0.345,  0.567, -0.789]
+1        │ text       │ [-0.345,  0.678, -0.234,  0.890, -0.456,  0.123, -0.678,  0.345]
+2        │ text       │ [ 0.567, -0.234,  0.789, -0.456,  0.123, -0.890,  0.345, -0.678]
+...      │ text       │ ... [system prompt, tools, env, git status] ...
+89       │ text       │ [ 0.456, -0.234,  0.789, -0.567,  0.123, -0.890,  0.345, -0.678]
+90       │ <img>      │ [ 0.891, -0.456,  0.234, -0.789,  0.567, -0.123,  0.345, -0.678]
+91       │ visual     │ [ 0.723, -0.891,  0.445, -0.612,  0.234, -0.556,  0.889, -0.334] ← top-left patch
+92       │ visual     │ [-0.456,  0.723, -0.891,  0.234, -0.667,  0.445, -0.223,  0.778]
+93       │ visual     │ [ 0.612, -0.334,  0.889, -0.723,  0.156, -0.445,  0.667, -0.889]
+94       │ visual     │ [ 0.334, -0.778,  0.556, -0.234,  0.889, -0.445,  0.123, -0.667]
+...      │ visual     │ ... [1,330 more visual tokens from image patches] ...
+1423     │ visual     │ [ 0.334, -0.667,  0.889, -0.234,  0.556, -0.778,  0.123, -0.445] ← bottom-right patch
+1424     │ text       │ [-0.234,  0.556, -0.778,  0.334, -0.889,  0.123, -0.445,  0.667]
+1425     │ text       │ [ 0.445, -0.889,  0.234, -0.556,  0.778, -0.123,  0.334, -0.667]
+1426     │ text       │ [ 0.123, -0.445,  0.667, -0.889,  0.234, -0.556,  0.778, -0.334]
+...      │ text       │ ... [user message, assistant responses] ...
+33605    │ text       │ [ 0.778, -0.334,  0.556, -0.889,  0.234, -0.667,  0.123, -0.445]
 #+end_src
 
 * MCP Servers

@@ -30,7 +30,7 @@
 </div>
 
 <script>
-    const slides = ["claude-code-in-practice.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "evolution.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "claude-code-what-actually-reaches-the-llm.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-overview.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting-concerns.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "exploration-realpath.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
+    const slides = ["claude-code-in-practice.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "evolution.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "claude-code-what-actually-reaches-the-llm.html", "claude-code-transformer-input.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-overview.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting-concerns.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "exploration-realpath.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
     const currentPage = location.pathname.split('/').pop();
     const idx = slides.indexOf(currentPage);
 
@@ -137,12 +137,28 @@ $ realpath [file1] [file2]</code></pre>
 <!-- Keyboard Navigation -->
 <script>
 document.addEventListener('keydown', function(e) {
+    // Escape closes the index popover
+    if (e.key === 'Escape') {
+        const popover = document.getElementById('index-popover');
+        if (popover && popover.style.display === 'block') {
+            popover.style.display = 'none';
+        }
+        return;
+    }
+
+    // Don't trigger navigation if typing in search input
+    if (e.target.id === 'index-search') return;
+
     if (e.key === 'ArrowLeft') {
         const prevLink = document.getElementById('prev-link');
         if (prevLink) window.location.href = prevLink.href;
     } else if (e.key === 'ArrowRight') {
         const nextLink = document.getElementById('next-link');
         if (nextLink) window.location.href = nextLink.href;
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const indexLink = document.getElementById('index-link');
+        if (indexLink) indexLink.click();
     }
 });
 </script>

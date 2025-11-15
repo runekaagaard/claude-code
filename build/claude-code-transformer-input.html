@@ -91,9 +91,9 @@
     <!-- Left Sidebar: Title & Images -->
     <div class="pt-4 space-y-6">
         <div class="space-y-3">
-            <h1 class="text-4xl font-bold text-gray-700 leading-tight">Documentation</h1>
+            <h1 class="text-4xl font-bold text-gray-700 leading-tight">Claude Code</h1>
             
-            <h2 class="text-xl text-gray-500 font-medium">LLM</h2>
+            <h2 class="text-xl text-gray-500 font-medium">Transformer Input</h2>
             
         </div>
 
@@ -103,33 +103,27 @@
     <!-- Right Content Area -->
     <div class="pt-4">
         <div class="slide-content space-y-6 text-3xl leading-relaxed">
-            <ul>
-<li>
-<p>
-Full source too big for context
-</p>
-</li>
-<li>
-<p>
-Document each app separately, then add cross cutting concerns
-</p>
-</li>
-<li>
-<p>
-Module-specific documentation
-</p>
-</li>
-<li>
-<p>
-Cross-cutting concerns
-</p>
-</li>
-<li>
-<p>
-&#34;Be sure to read relevant llm files in the @llm folder&#34;
-</p>
-</li>
-</ul>
+            <pre><code class="language-text">ACTUAL TRANSFORMER INPUT SEQUENCE
+
+Position │ Token Type │ Embedding (768-d vector, showing first 8 dims)
+─────────┼────────────┼────────────────────────────────────────────────
+0        │ text       │ [ 0.234, -0.891,  0.456, -0.123,  0.678, -0.345,  0.567, -0.789]
+1        │ text       │ [-0.345,  0.678, -0.234,  0.890, -0.456,  0.123, -0.678,  0.345]
+2        │ text       │ [ 0.567, -0.234,  0.789, -0.456,  0.123, -0.890,  0.345, -0.678]
+...      │ text       │ ... [system prompt, tools, env, git status] ...
+89       │ text       │ [ 0.456, -0.234,  0.789, -0.567,  0.123, -0.890,  0.345, -0.678]
+90       │ &lt;img&gt;      │ [ 0.891, -0.456,  0.234, -0.789,  0.567, -0.123,  0.345, -0.678]
+91       │ visual     │ [ 0.723, -0.891,  0.445, -0.612,  0.234, -0.556,  0.889, -0.334] ← top-left patch
+92       │ visual     │ [-0.456,  0.723, -0.891,  0.234, -0.667,  0.445, -0.223,  0.778]
+93       │ visual     │ [ 0.612, -0.334,  0.889, -0.723,  0.156, -0.445,  0.667, -0.889]
+94       │ visual     │ [ 0.334, -0.778,  0.556, -0.234,  0.889, -0.445,  0.123, -0.667]
+...      │ visual     │ ... [1,330 more visual tokens from image patches] ...
+1423     │ visual     │ [ 0.334, -0.667,  0.889, -0.234,  0.556, -0.778,  0.123, -0.445] ← bottom-right patch
+1424     │ text       │ [-0.234,  0.556, -0.778,  0.334, -0.889,  0.123, -0.445,  0.667]
+1425     │ text       │ [ 0.445, -0.889,  0.234, -0.556,  0.778, -0.123,  0.334, -0.667]
+1426     │ text       │ [ 0.123, -0.445,  0.667, -0.889,  0.234, -0.556,  0.778, -0.334]
+...      │ text       │ ... [user message, assistant responses] ...
+33605    │ text       │ [ 0.778, -0.334,  0.556, -0.889,  0.234, -0.667,  0.123, -0.445]</code></pre>
         </div>
     </div>
 </div>

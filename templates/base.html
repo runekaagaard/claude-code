@@ -93,12 +93,28 @@
 <!-- Keyboard Navigation -->
 <script>
 document.addEventListener('keydown', function(e) {
+    // Escape closes the index popover
+    if (e.key === 'Escape') {
+        const popover = document.getElementById('index-popover');
+        if (popover && popover.style.display === 'block') {
+            popover.style.display = 'none';
+        }
+        return;
+    }
+
+    // Don't trigger navigation if typing in search input
+    if (e.target.id === 'index-search') return;
+
     if (e.key === 'ArrowLeft') {
         const prevLink = document.getElementById('prev-link');
         if (prevLink) window.location.href = prevLink.href;
     } else if (e.key === 'ArrowRight') {
         const nextLink = document.getElementById('next-link');
         if (nextLink) window.location.href = nextLink.href;
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const indexLink = document.getElementById('index-link');
+        if (indexLink) indexLink.click();
     }
 });
 </script>
