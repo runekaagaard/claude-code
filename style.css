@@ -5,7 +5,7 @@
 @layer base {
   /* Typography */
   body {
-    @apply bg-gray-50 text-gray-900 min-h-screen;
+    @apply bg-gray-50 text-gray-600 min-h-screen;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.01em;
     background-image:
@@ -25,7 +25,7 @@
 
   /* Code blocks */
   pre {
-    @apply bg-gray-100 border border-gray-200 rounded-2xl p-6 text-gray-800 leading-relaxed;
+    @apply bg-gray-100 border border-gray-200 rounded-2xl p-6 text-gray-600 leading-relaxed text-left;
     font-size: 1rem;
     line-height: 1.625;
   }
@@ -33,6 +33,13 @@
   pre code {
     font-size: inherit;
     line-height: inherit;
+  }
+
+  /* Override highlight.js padding/margin */
+  .hljs, code.hljs, pre code.hljs {
+    padding: 0;
+    margin: 0;
+    display: inline;
   }
 
   /* Inline code */
@@ -85,11 +92,20 @@
 
   /* Timeline items */
   .timeline-item {
-    @apply flex items-start gap-4;
+    @apply flex items-start gap-4 mb-8;
+  }
+
+  .timeline-item:last-child {
+    @apply mb-0;
   }
 
   .timeline-year {
     @apply text-claude-orange font-bold min-w-[5rem];
+  }
+
+  /* Title-hide: bigger code */
+  .title-hide pre {
+    @apply text-3xl;
   }
 }
 

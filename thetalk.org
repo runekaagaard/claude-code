@@ -2,7 +2,6 @@
 :PROPERTIES:
 :TEMPLATE: title
 :END:
-Claude Code in Practice
 Making It Work on Large Projects
 
 * Evolution
@@ -47,6 +46,7 @@ Making It Work on Large Projects
 * Getting Started
 :PROPERTIES:
 :TEMPLATE: title
+:TITLE_HIDE: true
 :END:
 #+begin_src bash
 npm install -g @anthropic-ai/claude-code
@@ -307,6 +307,7 @@ Please process these instructions: $ARGUMENTS
 - Branch: [BRANCH_NAME]
 - PR: [PR_URL]
 - Worktree: ~/worktrees/[BRANCH_NAME]
+#+end_src
 
 * Exploration
 :PROPERTIES:
@@ -315,7 +316,6 @@ Please process these instructions: $ARGUMENTS
 - Great way to refresh your own understanding
 - Follow up for additional details
 - Stepwise approach makes good todo items
-#+end_src
 
 ** Prompt
 #+begin_src markdown
@@ -451,7 +451,8 @@ Now let's add the admin interface for RateWindow. It should have:
 - Search functionality
 - Read-only fields since this is historical data
 
-Also add a RateWindowChart that displays the last 24 hours with sorting and pagination. Make it look good and follow the patterns used elsewhere in the project.
+Also add a RateWindowChart that displays the last 24 hours with sorting and pagination. Make it look good and 
+follow the patterns used elsewhere in the project.
 #+end_src
 
 ** Feel

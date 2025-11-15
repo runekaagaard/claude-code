@@ -5,7 +5,7 @@
 <div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
     <!-- Left Sidebar: Title & Images -->
     <div class="pt-4 space-y-6">
-        <h1 class="text-4xl font-bold text-gray-900 leading-tight">{{ title }}</h1>
+        <h1 class="text-4xl font-bold text-gray-700 leading-tight">{{ title }}</h1>
 
         {% if images %}
             {% for image in images %}
@@ -26,7 +26,7 @@
 
     <!-- Right Content Area: Timeline -->
     <div class="pt-4">
-        <div class="slide-content space-y-4 text-2xl text-gray-700">
+        <div class="slide-content text-3xl">
             {% for item in items %}
                 {% if item.year %}
                 <div class="timeline-item">

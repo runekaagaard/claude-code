@@ -32,6 +32,18 @@ def org_body_to_html(body):
     # Autolink URLs
     html = autolink_urls(html)
 
+    # Wrap pre contents with code tags for highlight.js
+    def wrap_code(match):
+        attrs = match.group(1)
+        content = match.group(2).strip()
+        return f'<pre{attrs}><code>{content}</code></pre>'
+
+    html = re.sub(
+        r'<pre([^>]*)>(.*?)</pre>',
+        wrap_code,
+        html, flags=re.DOTALL
+    )
+
     return html
 
 def parse_grid(body):
@@ -116,6 +128,7 @@ def process_node(node, parent_title=None):
     if template == 'title':
         slide_data['html_content'] = org_body_to_html(node.body)
         slide_data['template'] = 'title'
+        slide_data['title_hide'] = node.properties.get('TITLE_HIDE', '').lower() == 'true' if node.properties else False
         slide_data['images'] = []  # No images for title slides
 
     elif template == 'evolution':
