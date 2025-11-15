@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Two Column Layout -->
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar: Title & Images -->
+    <div class="pt-4 space-y-6">
+        <h1 class="text-4xl font-bold text-gray-700 leading-tight">{{ title }}</h1>
+
+        {% if images %}
+            {% for image in images %}
+            <div>
+                <img src="{{ image.src }}" alt="{{ image.alt }}" class="w-full h-auto rounded-lg shadow-lg border-2 border-gray-200">
+                <div class="text-sm text-gray-600 mt-2">
+                    {% if image.caption_main %}
+                    <div class="font-medium{% if image.caption_italic %} italic{% endif %}">{{ image.caption_main }}</div>
+                    {% endif %}
+                    {% if image.caption_sub %}
+                    <div class="text-xs text-gray-500">{{ image.caption_sub }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Right Content Area: Timeline -->
+    <div class="pt-4">
+        <div class="slide-content text-3xl">
+            {% for item in items %}
+                {% if item.year %}
+                <div class="timeline-item">
+                    <span class="timeline-year">{{ item.year }}</span>
+                    <p>{{ item.text }}</p>
+                </div>
+                {% else %}
+                <p>{{ item.text }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

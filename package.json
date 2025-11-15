@@ -1,0 +1,11 @@
+{
+  "name": "2025-claude-code-ida",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i style.css -o build/static/style.css --minify"
+  }
+}

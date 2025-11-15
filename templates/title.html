@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="h-full flex flex-col items-center justify-center text-center space-y-6{% if title_hide %} title-hide{% endif %}">
+    {% if title and not title_hide %}
+    <h1 class="text-5xl font-bold bg-gradient-to-br from-claude-orange via-orange-400 to-amber-500 bg-clip-text text-transparent">
+        {{ title }}
+    </h1>
+    {% endif %}
+    {% if subtitle %}
+    <p class="text-xl font-light">
+        {{ subtitle }}
+    </p>
+    {% endif %}
+    {% if html_content %}
+    <div class="text-2xl">
+        {{ html_content|safe }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Typography */
+  body {
+    @apply bg-gray-50 text-gray-600 min-h-screen;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Links */
+  a {
+    @apply text-claude-orange hover:underline;
+  }
+
+  /* Code blocks */
+  pre {
+    @apply bg-gray-100 border border-gray-200 rounded-2xl p-6 text-gray-600 leading-relaxed text-left;
+    font-size: 1rem;
+    line-height: 1.625;
+  }
+
+  pre code {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Override highlight.js padding/margin */
+  .hljs, code.hljs, pre code.hljs {
+    padding: 0;
+    margin: 0;
+    display: inline;
+  }
+
+  /* Inline code */
+  code {
+    font-size: 1rem;
+  }
+
+  p code, li code {
+    @apply bg-gray-100 px-1.5 py-0.5 rounded text-claude-orange;
+    font-size: 0.9em;
+  }
+
+  /* Tables */
+  table {
+    @apply w-full text-lg bg-gray-100 border border-gray-200 rounded-2xl p-6;
+  }
+
+  thead {
+    @apply border-b-2 border-gray-300;
+  }
+
+  tr {
+    @apply border-b border-gray-200;
+  }
+
+  th {
+    @apply text-left py-2 px-3;
+  }
+
+  td {
+    @apply py-2 px-3 align-top;
+  }
+
+  /* Lists in content areas */
+  .slide-content ul {
+    @apply list-none p-0 m-0;
+  }
+
+  .slide-content ul li {
+    @apply mb-6;
+  }
+
+  .slide-content ul li:last-child {
+    @apply mb-0;
+  }
+
+  .slide-content ul li > p {
+    @apply m-0;
+  }
+
+  /* Timeline items */
+  .timeline-item {
+    @apply flex items-start gap-4 mb-8;
+  }
+
+  .timeline-item:last-child {
+    @apply mb-0;
+  }
+
+  .timeline-year {
+    @apply text-claude-orange font-bold min-w-[5rem];
+  }
+
+  /* Title-hide: bigger code */
+  .title-hide pre {
+    @apply text-3xl;
+  }
+}
+
+@layer components {
+  /* Navigation */
+  nav {
+    @apply absolute top-3 right-3 flex gap-6 text-xs text-gray-400;
+  }
+
+  nav a {
+    @apply transition-colors duration-150 no-underline;
+  }
+
+  nav a:hover {
+    @apply text-gray-600 no-underline;
+  }
+}

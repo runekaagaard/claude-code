@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code in Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/highlight-github.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/highlight.min.js"></script>
+</head>
+<body>
+    <div class="h-screen px-[5vw] py-[5vh]">
+
+<!-- Navigation -->
+<nav id="slide-nav"></nav>
+<script>
+    const slides = {{ all_slides|tojson }};
+    const currentPage = location.pathname.split('/').pop();
+    const idx = slides.indexOf(currentPage);
+
+    if (idx !== -1) {
+        const nav = document.getElementById('slide-nav');
+        const prevLink = idx > 0 ? `<a href="${slides[idx-1]}" id="prev-link">← Prev</a>` : '';
+        const nextLink = idx < slides.length - 1 ? `<a href="${slides[idx+1]}" id="next-link">Next →</a>` : '';
+
+        nav.innerHTML = `
+            ${prevLink}
+            <a href="index.html">Index</a>
+            ${nextLink}
+        `;
+    }
+</script>
+
+{% block content %}{% endblock %}
+
+    </div>
+
+<!-- Keyboard Navigation -->
+<script>
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+        const prevLink = document.getElementById('prev-link');
+        if (prevLink) window.location.href = prevLink.href;
+    } else if (e.key === 'ArrowRight') {
+        const nextLink = document.getElementById('next-link');
+        if (nextLink) window.location.href = nextLink.href;
+    }
+});
+</script>
+
+<!-- Syntax Highlighting -->
+<script>hljs.highlightAll();</script>
+</body>
+</html>
