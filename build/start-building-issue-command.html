@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code in Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/highlight-github.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/highlight.min.js"></script>
+</head>
+<body>
+    <div class="h-screen px-[5vw] py-[5vh]">
+
+<!-- Navigation -->
+<nav id="slide-nav"></nav>
+<script>
+    const slides = ["claude-code-in-practice.html", "evolution.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "exploration-realpath.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
+    const currentPage = location.pathname.split('/').pop();
+    const idx = slides.indexOf(currentPage);
+
+    if (idx !== -1) {
+        const nav = document.getElementById('slide-nav');
+        const prevLink = idx > 0 ? `<a href="${slides[idx-1]}" id="prev-link">← Prev</a>` : '';
+        const nextLink = idx < slides.length - 1 ? `<a href="${slides[idx+1]}" id="next-link">Next →</a>` : '';
+
+        nav.innerHTML = `
+            ${prevLink}
+            <a href="index.html">Index</a>
+            ${nextLink}
+        `;
+    }
+</script>
+
+
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar: Title & Images -->
+    <div class="pt-4 space-y-6">
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold text-gray-700 leading-tight">Start Building</h1>
+            
+            <h2 class="text-xl text-gray-500 font-medium">/issue command</h2>
+            
+        </div>
+
+        
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="pt-4">
+        <div class="slide-content space-y-6 text-3xl leading-relaxed">
+            <pre class="src src-markdown"><code>---
+description: Manage issues, branches, PR's, worktrees and workspaces
+---
+
+Please process these instructions: $ARGUMENTS
+
+# Issues
+
+- Use the redmine tools
+- The issue id is in the branch name
+
+# Branches
+...
+
+## Output
+
+✅ Created:
+- Issue #[NUM]: [TITLE]
+  [ISSUE_URL]
+- Branch: [BRANCH_NAME]
+- PR: [PR_URL]
+- Worktree: ~/worktrees/[BRANCH_NAME]</code></pre>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+
+<!-- Keyboard Navigation -->
+<script>
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+        const prevLink = document.getElementById('prev-link');
+        if (prevLink) window.location.href = prevLink.href;
+    } else if (e.key === 'ArrowRight') {
+        const nextLink = document.getElementById('next-link');
+        if (nextLink) window.location.href = nextLink.href;
+    }
+});
+</script>
+
+<!-- Syntax Highlighting -->
+<script>hljs.highlightAll();</script>
+</body>
+</html>
