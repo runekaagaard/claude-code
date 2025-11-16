@@ -16,21 +16,16 @@ def slugify(text):
     text = re.sub(r'-+', '-', text)
     return text.strip('-')
 
-def autolink_urls(html):
-    """Convert plain URLs to <a> tags"""
-    url_pattern = r'(?<!href=")(?<!src=")(https?://[^\s<]+)'
-    return re.sub(url_pattern, r'<a href="\1">\1</a>', html)
-
 def org_body_to_html(body):
     """Convert org-mode body to clean semantic HTML"""
     if not body:
         return ""
 
-    # Convert org to HTML
+    # Convert org to HTML (org-python handles org-mode links natively)
     html = to_html(body, toc=False, highlight=False)
 
-    # Autolink URLs
-    html = autolink_urls(html)
+    # Fix org-python bug: add space after links when followed by non-whitespace
+    html = re.sub(r'</a>([^\s<])', r'</a> \1', html)
 
     # Wrap pre contents with code tags for highlight.js
     def wrap_code(match):
@@ -121,7 +116,8 @@ def parse_evolution(body):
 def process_node(node, parent_title=None):
     """Process a single org node and return slide data if it has body"""
     # Skip nodes without body
-    if not node.body or not node.body.strip():
+    body = node.get_body(format='raw')
+    if not body or not body.strip():
         return None
 
     heading = node.heading.strip()
@@ -141,22 +137,22 @@ def process_node(node, parent_title=None):
 
     # Process based on template type
     if template == 'title':
-        slide_data['html_content'] = org_body_to_html(node.body)
+        slide_data['html_content'] = org_body_to_html(body)
         slide_data['template'] = 'title'
         slide_data['title_hide'] = node.properties.get('TITLE_HIDE', '').lower() == 'true' if node.properties else False
         slide_data['images'] = []  # No images for title slides
 
     elif template == 'evolution':
-        slide_data['items'] = parse_evolution(node.body)
+        slide_data['items'] = parse_evolution(body)
         slide_data['template'] = 'evolution'
 
     elif template == 'grid':
-        slide_data['items'] = parse_grid(node.body)
+        slide_data['items'] = parse_grid(body)
         slide_data['template'] = 'grid'
 
     else:
         # Default template
-        slide_data['html_content'] = org_body_to_html(node.body)
+        slide_data['html_content'] = org_body_to_html(body)
         slide_data['template'] = 'default'
 
     return slide_data

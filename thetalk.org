@@ -17,21 +17,36 @@ Making It Work on Large Projects
 ** GitHub
 :PROPERTIES:
 :END:
-- https://github.com/runekaagaard
-- https://github.com/runekaagaard/mcp-alchemy - Relational Databases
-- https://github.com/runekaagaard/mcp-redmine - Redmine Project Management
-- https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
-- https://hypergen.it - Django Liveview
-- https://github.com/runekaagaard/snowscript - A language that compiles to PHP
-- https://github.com/runekaagaard/mcp-symbol-edit - Symbol-level code editing
-- https://runekaagaard.github.io/claude-code/ - This talk
+- [[https://github.com/runekaagaard]] \\
+  My Github
+
+- [[https://github.com/runekaagaard/mcp-alchemy]] \\
+  Relational Databases
+
+- [[https://github.com/runekaagaard/mcp-redmine]] \\
+  Redmine Project Management
+
+- [[https://github.com/runekaagaard/mcp-notmuch-sendmail]] \\
+  Send/Receive Email
+
+- [[https://hypergen.it]] \\
+  Django Liveview
+
+- [[https://github.com/runekaagaard/snowscript]] \\
+  A language that compiles to PHP
+
+- [[https://github.com/runekaagaard/mcp-symbol-edit]] \\
+  Symbol-level code editing
+
+- [[https://runekaagaard.github.io/claude-code/]] \\
+  This talk
 
 ** Talk
 :PROPERTIES:
 :END:
 - Building features fast without losing control
 - MCP servers: Your tools become Claude's tools
-- Worktrees and infrastructure for parallel development
+- Infrastructure for parallel development
 - Root to leaves: Foundation first, details last
 
 * Evolution
@@ -63,8 +78,9 @@ claude
 - Command Line
 - Multimodal
 - Batteries included
-- Fuzzy & Random
 - Hooks, Commands, Agents, Skills, Plugins
+- Smartish permisions
+- Fuzzy & Random
 
 ** Batteries
 :PROPERTIES:
@@ -310,11 +326,10 @@ if __name__ == "__main__":
 ** Good Server
 :PROPERTIES:
 :END:
-- As few tools as possible
-- Add discoverability to existing programs
-- Don't change the documentation, just change the tool
+- Use as few tools as possible
+- Add discoverability to existing code
 - Change interface to something the model likes
-- OpenAPI's are great
+- Works great with OpenAPI's
 
 ** Strategies
 | Operation  | MCP Alchemy        | Notmuch Sendmail      | Redmine        |
@@ -339,7 +354,6 @@ if __name__ == "__main__":
 .claude/
 ├── settings.json                  # Team-shared configuration (committed to git)
 ├── settings.local.json            # Personal overrides (gitignored)
-├── .mcp.json                      # Model Context Protocol server configuration
 ├── commands/                      # Custom slash commands
 │   ├── issue.md                  # Create issues, branches, PRs, worktrees
 │   ├── review.md                 # Code review workflow
