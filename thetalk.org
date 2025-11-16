@@ -22,13 +22,16 @@ Making It Work on Large Projects
 - https://github.com/runekaagaard/mcp-redmine - Redmine Project Management
 - https://github.com/runekaagaard/mcp-notmuch-sendmail - Send/Receive Email
 - https://hypergen.it - Django Liveview
+- https://github.com/runekaagaard/snowscript - A language that compiles to PHP
+- https://github.com/runekaagaard/mcp-symbol-edit - Symbol-level code editing
+- https://runekaagaard.github.io/claude-code/ - This talk
 
 ** Talk
 :PROPERTIES:
 :END:
 - Building features fast without losing control
 - MCP servers: Your tools become Claude's tools
-- Worktrees and workflows for parallel development
+- Worktrees and infrastructure for parallel development
 - Root to leaves: Foundation first, details last
 
 * Evolution
@@ -61,7 +64,7 @@ claude
 - Multimodal
 - Batteries included
 - Fuzzy & Random
-- Hooks, Commands, Skills, Plugins
+- Hooks, Commands, Agents, Skills, Plugins
 
 ** Batteries
 :PROPERTIES:
@@ -107,18 +110,18 @@ Status: M src/auth/password.py
 <tools>
 <!-- 41 built-in tools -->
 <tool name="Read">
-  <description>Read files, images, PDFs, Jupyter notebooks</description>
-  <parameters>
-    <parameter name="file_path" type="string" required="true">
-      The absolute path to the file to read
-    </parameter>
-    <parameter name="limit" type="number" required="false">
-      The number of lines to read. Only provide if file is too large.
-    </parameter>
-    <parameter name="offset" type="number" required="false">
-      The line number to start reading from
-    </parameter>
-  </parameters>
+<description>Read files, images, PDFs, Jupyter notebooks</description>
+<parameters>
+<parameter name="file_path" type="string" required="true">
+The absolute path to the file to read
+</parameter>
+<parameter name="limit" type="number" required="false">
+The number of lines to read. Only provide if file is too large.
+</parameter>
+<parameter name="offset" type="number" required="false">
+The line number to start reading from
+</parameter>
+</parameters>
 </tool>
 <tool name="Edit"><description>Exact string replacements</description></tool>
 <tool name="Write"><description>Write or overwrite files</description></tool>
@@ -128,7 +131,7 @@ Status: M src/auth/password.py
 
 <!-- 14 MCP server tools -->
 <tool name="mcp__db_mysql__execute_query">
-  <description>Execute SQL query with param substitution</description>
+<description>Execute SQL query with param substitution</description>
 </tool>
 <!-- ... 13 more MCP tools ... -->
 </tools>
@@ -334,7 +337,6 @@ if __name__ == "__main__":
 ** Overview
 #+begin_src bash
 .claude/
-├── CLAUDE.md                      # Project memory and instructions (auto-loaded)
 ├── settings.json                  # Team-shared configuration (committed to git)
 ├── settings.local.json            # Personal overrides (gitignored)
 ├── .mcp.json                      # Model Context Protocol server configuration
