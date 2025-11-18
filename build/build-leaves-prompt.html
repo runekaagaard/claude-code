@@ -30,7 +30,7 @@
 </div>
 
 <script>
-    const slides = ["claude-code-in-practice.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "evolution.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "claude-code-what-actually-reaches-the-llm.html", "claude-code-transformer-input.html", "demo-time.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-overview.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting-concerns.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "exploration-realpath.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
+    const slides = ["claude-code-in-practice.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "evolution.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "claude-code-what-actually-reaches-the-llm.html", "claude-code-transformer-input.html", "demo-time.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-overview.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting-concerns.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-git-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "cleanup.html", "cleanup-prompt.html", "cleanup-feel.html", "get-feedback.html", "ship-it.html"];
     const currentPage = location.pathname.split('/').pop();
     const idx = slides.indexOf(currentPage);
 
@@ -106,7 +106,9 @@
             <pre><code class="language-markdown">Now let&#x27;s add the admin interface for RateWindow. Make it usable for the end user.
 
 Also add a RateWindowChart at ratelimit/dashboard that displays the last 24 hours with sorting and pagination. 
-Make it look good and follow the patterns used elsewhere in the project.</code></pre>
+Make it look good and follow the patterns used elsewhere in the project.
+
+Feel free to read relevant docs in the @llm folder.</code></pre>
         </div>
     </div>
 </div>

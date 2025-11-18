@@ -45,6 +45,7 @@ Making It Work on Large Projects
 :PROPERTIES:
 :END:
 - Building features fast without losing control
+- Thinking through it
 - MCP servers: Your tools become Claude's tools
 - Infrastructure for parallel development
 - Root to leaves: Foundation first, details last
@@ -278,6 +279,7 @@ def multiply(a: float, b: float) -> str:
     Args:
         a: First number
         b: Second number
+    """
     
     return str(a * b)
 
@@ -286,6 +288,10 @@ if __name__ == "__main__":
 #+end_src
 
 ** Config
+#+begin_src bash
+claude --mcp-config ~/claude_code_config.json
+#+end_src
+
 #+begin_src json
 {
   "mcpServers": {
@@ -332,21 +338,20 @@ if __name__ == "__main__":
 - Works great with OpenAPI's
 
 ** Strategies
-| Operation  | MCP Alchemy        | Notmuch Sendmail      | Redmine        |
-|------------+--------------------+-----------------------+----------------|
-| Discovery  | all_table_names    | find_email_thread     | paths_list     |
-|            | filter_table_names |                       | request        |
-|            | schema_definitions |                       |                |
-|------------+--------------------+-----------------------+----------------|
-| Retrieval  | execute_query      | view_email_thread     | paths_info     |
-|            |                    | read_email_attachment | request        |
-|------------+--------------------+-----------------------+----------------|
-| Mutation   | execute_query      | compose_new_email     | request        |
-|            |                    | compose_email_reply   |                |
-|            |                    | send_email            |                |
-|------------+--------------------+-----------------------+----------------|
-| Utility    |                    | sync_emails           | upload         |
-|            |                    |                       | download       |
+| Operation    | MCP Alchemy        | Notmuch Sendmail      | Redmine        |
+|--------------+--------------------+-----------------------+----------------|
+| *Discovery*  | all_table_names    | find_email_thread     | paths_list     |
+|              | filter_table_names |                       | paths_info     |
+|              | schema_definitions |                       |                |
+|--------------+--------------------+-----------------------+----------------|
+| *Retrieval*  | execute_query      | view_email_thread     | request        |
+|              |                    | read_email_attachment |                |
+|--------------+--------------------+-----------------------+----------------|
+| *Mutation*   | execute_query      | compose_new_email     | request        |
+|              |                    | compose_email_reply   |                |
+|--------------+--------------------+-----------------------+----------------|
+| *Actions*    |                    | send_email            | upload         |
+|              |                    | sync_emails           | download       |
 
 * Documentation
 ** Overview
@@ -413,20 +418,19 @@ Dear Claude:
 :END:
 - What makes developers happy makes Claude effective
 - Fast dev environment creation
-- Local databases with real data
-- Tests for AI feedback loop
-- Auto port discovery across workspaces
+- Local databases with anonymized data
+- Automatic ports
 - Branch name visible in UI
 
 ** Worktrees
 :PROPERTIES:
 :END:
 - Claude Code conversations are directory specific
-- Worktrees over branch switching
+- Git worktrees > branch switching
 - Each task gets isolated directory
 - Work on multiple features simultaneously
 
-** Create Worktree
+** Create Git Worktree
 #+begin_src bash
 git worktree add -b mybranch ~/worktrees/mybranch origin/main
 cd ~/worktrees/mybranch
@@ -504,7 +508,6 @@ Please process these instructions: $ARGUMENTS
 - Make Claude use a lot of tokens
 - Great way to refresh your own understanding
 - Follow up for additional details
-- Stepwise approach makes good todo items
 
 ** Prompt
 #+begin_src markdown
@@ -522,37 +525,6 @@ Then read these core files in full:
 After that, reference relevant functions in src/cache/redis_client.py and do additional research as needed.
 
 Finally, summarize your findings.
-#+end_src
-
-** Realpath
-#+begin_src bash
-# Get absolute paths for files
-$ realpath [file1] [file2]
-#+end_src
-
-#+begin_src lisp
-(defun rk-realpath ()
-  "Copy the full path of current buffer to kill ring"
-  (interactive)
-  (kill-new (buffer-file-name))
-  (message "Copied: %s" (buffer-file-name)))
-
-(defun rk-realpath-visible-buffers ()
-  "Copy a newline separated list of full paths of visible buffers to kill ring."
-  (interactive)
-  (let ((paths '()))
-    ;; Collect paths from all visible buffers
-    (dolist (frame (frame-list))
-      (dolist (window (window-list frame))
-        (let* ((buffer (window-buffer window))
-               (path (buffer-file-name buffer)))
-          (when path
-            (push path paths)))))
-
-    ;; Create newline separated string and kill it
-    (let ((paths-str (mapconcat #'identity (delete-dups (nreverse paths)) "\n")))
-      (kill-new paths-str)
-      (message "Copied %d visible buffer paths" (length (split-string paths-str "\n" t))))))
 #+end_src
 
 * Planning
@@ -583,7 +555,7 @@ Great questions, I'm thinking the following:
 2. Keep the last 24 hours of windows in the database
 3. The Celery task just reads from Redis and writes to the DB
 
-Sounds good? Let's see the code.
+Sounds good? Don't code.
 #+end_src
 
 * Build Root
@@ -620,9 +592,9 @@ ratelimit.models.RateWindow:
 :PROPERTIES:
 :END:
 - I'm in control
-- Great input → Great output
+- Great input = Great output
 - I'm not surprised by the output
-- With these instructions, I could build this myself
+- With these instructions, I could build it myself
 
 * Build Leaves
 :PROPERTIES:
@@ -640,6 +612,8 @@ Now let's add the admin interface for RateWindow. Make it usable for the end use
 
 Also add a RateWindowChart at ratelimit/dashboard that displays the last 24 hours with sorting and pagination. 
 Make it look good and follow the patterns used elsewhere in the project.
+
+Feel free to read relevant docs in the @llm folder.
 #+end_src
 
 ** Feel
