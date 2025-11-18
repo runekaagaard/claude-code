@@ -660,7 +660,7 @@ IMPORTANT TOOL RESTRICTIONS:
 }
 #+end_src
 
-* Cleanup
+* Prepare for Merge
 :PROPERTIES:
 :END:
 - Remove LLM idioms and artifacts
@@ -669,17 +669,24 @@ IMPORTANT TOOL RESTRICTIONS:
 - Delete commented-out code
 - Make it look production-ready
 
-** Prompt
+** Command
 #+begin_src markdown
-Please clean up the code we just wrote:
+/prepare-for-merge
+#+end_src
+
+** .claude/commands/prepare-for-merge.md
+#+begin_src markdown
+---
+description: Clean up code and prepare for merge
+---
+
+Please clean up the code in this branch. Read the full diff agains main, then:
 
 - Move all imports to the top of the file
 - Remove "before/after" style comments
 - Remove placeholder comments like "TODO" or "FIXME" that we've already implemented
 - Delete any commented-out old code
 - Remove overly verbose comments that explain obvious things
-- Consolidate any duplicate code
-- Make sure formatting matches the rest of the project
 
 Keep the code functionally identical, just make it look production-ready.
 #+end_src
@@ -688,18 +695,32 @@ Keep the code functionally identical, just make it look production-ready.
 :PROPERTIES:
 :END:
 - This makes it feel like my code
-- Ready to commit
+- I'm proud of this
 - No evidence of LLM artifacts
 
 * Get feedback
 :PROPERTIES:
 :END:
-- Compose email
-- Update issue
-- Ping stakeholders on slack
+** Prompt
+#+begin_src markdown
+Nice work, now let's:
+
+- Update the issue with what we've done
+- Create a PR, and attach it to the issue
+- Add snarf and bop as reviewers
+- Ping snarf and bop on slack and ask them to review
+- Write an email to the author of the issue describing what we've done in danish. Use non technical language.
+  Attach a screenshot of the UI.
+#+end_src
 
 * Ship It
 :PROPERTIES:
 :END:
-- Merge PR
-- Update and close issue
+** Prompt
+#+begin_src markdown
+Now finally please merge the PR and push it to production. 
+
+Write an email to alltheguys@snarp.eu explaining what the feature does. 
+
+Update and close the issue too.
+#+end_src
