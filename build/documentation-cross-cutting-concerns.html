@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code in Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/highlight-github.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/highlight.min.js"></script>
+</head>
+<body>
+    <div class="h-screen px-[5vw] py-[5vh]">
+
+<!-- Navigation -->
+<nav id="slide-nav"></nav>
+
+<!-- Index Popover -->
+<div id="index-popover" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; padding: 3vh 3vw; overflow-y: auto;">
+    <div style="background: white; border-radius: 0.5rem; padding: 1rem; max-width: 1200px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.25rem; font-weight: bold; color: #374151;">All Slides</h2>
+            <button id="close-index" style="font-size: 1.5rem; color: #9ca3af; cursor: pointer; border: none; background: none; padding: 0;">&times;</button>
+        </div>
+        <input type="text" id="index-search" placeholder="Search slides..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #e5e7eb; border-radius: 0.25rem; font-size: 0.875rem;">
+        <div id="index-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;"></div>
+    </div>
+</div>
+
+<script>
+    const slides = ["index.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "evolution.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "claude-code-what-actually-reaches-the-llm.html", "claude-code-transformer-input.html", "demo-time.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-overview.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting-concerns.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-git-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "prepare-for-merge.html", "prepare-for-merge-command.html", "prepare-for-merge-claudecommandsprepare-for-mergemd.html", "prepare-for-merge-feel.html", "get-feedback-prompt.html", "ship-it-prompt.html"];
+    const currentPage = location.pathname.split('/').pop();
+    const idx = slides.indexOf(currentPage);
+
+    if (idx !== -1) {
+        const nav = document.getElementById('slide-nav');
+        const prevLink = idx > 0 ? `<a href="${slides[idx-1]}" id="prev-link">← Prev</a>` : '';
+        const nextLink = idx < slides.length - 1 ? `<a href="${slides[idx+1]}" id="next-link">Next →</a>` : '';
+
+        nav.innerHTML = `
+            ${prevLink}
+            <a href="#" id="index-link">Index</a>
+            ${nextLink}
+        `;
+
+        // Index popover
+        const renderSlides = (filterText = '') => {
+            const grid = document.getElementById('index-grid');
+            const filter = filterText.toLowerCase();
+            grid.innerHTML = slides.map((slide, i) => {
+                const title = slide.replace('.html', '').replace(/-/g, ' ');
+                const isCurrent = i === idx;
+                const matches = !filter || title.toLowerCase().includes(filter) || (i + 1).toString().includes(filter);
+                if (!matches) return '';
+                return `<a href="${slide}" style="display: block; padding: 0.5rem; border: 1px solid ${isCurrent ? '#D97757' : '#e5e7eb'}; border-radius: 0.25rem; text-decoration: none; background: ${isCurrent ? '#fff5f2' : 'white'};">
+                    <div style="font-weight: bold; color: #D97757; font-size: 0.875rem; margin-bottom: 0.125rem;">${i + 1}</div>
+                    <div style="font-size: 0.75rem; color: #6b7280; text-transform: capitalize; line-height: 1.2;">${title}</div>
+                </a>`;
+            }).join('');
+        };
+
+        document.getElementById('index-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            renderSlides();
+            document.getElementById('index-popover').style.display = 'block';
+            const searchInput = document.getElementById('index-search');
+            searchInput.value = '';
+            searchInput.focus();
+        });
+
+        document.getElementById('index-search').addEventListener('keyup', function(e) {
+            renderSlides(e.target.value);
+        });
+
+        document.getElementById('close-index').addEventListener('click', function() {
+            document.getElementById('index-popover').style.display = 'none';
+        });
+
+        document.getElementById('index-popover').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+
+<div class="grid grid-cols-[minmax(250px,20%)_1fr] gap-[5vw] h-full">
+    <!-- Left Sidebar: Title & Images -->
+    <div class="pt-4 space-y-6">
+        <div class="space-y-3">
+            <h1 class="text-4xl font-bold text-gray-700 leading-tight">Documentation</h1>
+            
+            <h2 class="text-xl text-gray-500 font-medium">Cross Cutting Concerns</h2>
+            
+        </div>
+
+        
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="pt-4">
+        <div class="slide-content space-y-6 text-3xl leading-relaxed">
+            <pre><code class="language-markdown">Dear Claude:
+
+- please read all the app documentation files in @llm/ and research cross-cutting concerns
+- update each llm/[app].md file with these details</code></pre>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+
+<!-- Keyboard Navigation -->
+<script>
+document.addEventListener('keydown', function(e) {
+    // Escape closes the index popover
+    if (e.key === 'Escape') {
+        const popover = document.getElementById('index-popover');
+        if (popover && popover.style.display === 'block') {
+            popover.style.display = 'none';
+        }
+        return;
+    }
+
+    // Don't trigger navigation if typing in search input
+    if (e.target.id === 'index-search') return;
+
+    if (e.key === 'ArrowLeft') {
+        const prevLink = document.getElementById('prev-link');
+        if (prevLink) window.location.href = prevLink.href;
+    } else if (e.key === 'ArrowRight') {
+        const nextLink = document.getElementById('next-link');
+        if (nextLink) window.location.href = nextLink.href;
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const indexLink = document.getElementById('index-link');
+        if (indexLink) indexLink.click();
+    }
+});
+</script>
+
+<!-- Syntax Highlighting -->
+<script>hljs.highlightAll();</script>
+</body>
+</html>

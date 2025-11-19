@@ -183,6 +183,11 @@ def build_slides(slides, output_dir):
     output_path = Path(output_dir)
 
     env = Environment(loader=FileSystemLoader('templates'))
+
+    # First slide becomes index.html
+    if slides:
+        slides[0]['filename'] = 'index.html'
+
     filenames = [slide['filename'] for slide in slides]
 
     for i, slide in enumerate(slides):
@@ -194,13 +199,6 @@ def build_slides(slides, output_dir):
 
         html = template.render(**slide)
         (output_path / slide['filename']).write_text(html)
-
-    # Index
-    index_template = env.get_template('index.html')
-    index_html = index_template.render(
-        slides=[(s.get('title', s.get('subtitle', 'Slide')), s['filename']) for s in slides],
-        first_slide=filenames[0] if filenames else 'index.html')
-    (output_path / 'index.html').write_text(index_html)
 
     print(f"✓ Built {len(slides)} slides")
 
