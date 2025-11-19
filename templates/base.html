@@ -31,7 +31,11 @@
 
 <script>
     const slides = {{ all_slides|tojson }};
-    const currentPage = location.pathname.split('/').pop();
+    let currentPage = location.pathname.split('/').pop();
+    // Handle root path or empty - default to index.html
+    if (!currentPage || currentPage === '') {
+        currentPage = 'index.html';
+    }
     const idx = slides.indexOf(currentPage);
 
     if (idx !== -1) {

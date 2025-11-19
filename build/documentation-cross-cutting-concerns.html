@@ -31,7 +31,11 @@
 
 <script>
     const slides = ["index.html", "about-rune-kaagaard.html", "about-github.html", "about-talk.html", "evolution.html", "getting-started.html", "claude-code.html", "claude-code-batteries.html", "claude-code-what-actually-reaches-the-llm.html", "claude-code-transformer-input.html", "demo-time.html", "mcp-servers.html", "mcp-servers-value-proposition.html", "mcp-servers-config.html", "mcp-servers-good-server.html", "mcp-servers-strategies.html", "documentation-overview.html", "documentation-claudemd.html", "documentation-llm.html", "documentation-repomix.html", "documentation-cross-cutting-concerns.html", "dev-setup.html", "dev-setup-worktrees.html", "dev-setup-create-git-worktree.html", "dev-setup-workspace-creation.html", "start-building.html", "start-building-issue-command.html", "exploration.html", "exploration-prompt.html", "planning.html", "planning-prompt.html", "build-root.html", "build-root-prompt.html", "build-root-feel.html", "build-leaves.html", "build-leaves-prompt.html", "build-leaves-feel.html", "commit.html", "prepare-for-merge.html", "prepare-for-merge-command.html", "prepare-for-merge-claudecommandsprepare-for-mergemd.html", "prepare-for-merge-feel.html", "get-feedback-prompt.html", "ship-it-prompt.html"];
-    const currentPage = location.pathname.split('/').pop();
+    let currentPage = location.pathname.split('/').pop();
+    // Handle root path or empty - default to index.html
+    if (!currentPage || currentPage === '') {
+        currentPage = 'index.html';
+    }
     const idx = slides.indexOf(currentPage);
 
     if (idx !== -1) {
