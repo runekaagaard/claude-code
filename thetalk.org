@@ -383,7 +383,7 @@ CLAUDE.md
 - Tech stack, modules, conventions, where to find things
 - Don't use directory CLAUDE.md's
 
-** Example Content
+** CLAUDE.md Example
 #+begin_src markdown
 # E-Commerce Platform - Project Instructions
 
@@ -568,47 +568,6 @@ All major apps documented in llm/ directory:
 - Cross-cutting concerns
 - "Be sure to read relevant llm files in the @llm folder"
 
-** Repomix
-#+begin_src bash
-# Generate with repomix
-for app in src/apps/*; do
-  appname=$(basename $app)
-  repomix --include "$app/**" --style markdown \
-    --output "repomix-$appname.md"
-  claude -p -c "Read @repomix-$appname.md then follow \
-    instructions in @llm/how_to_document_an_app.md and \
-    generate llm/$appname.md"
-done
-#+end_src
-
-#+begin_src xml
-<directory_structure>
-queries/
-  py.scm
-server.py
-</directory_structure>
-
-<files>
-This section contains the contents of the repository's files.
-
-<file path="queries/py.scm">
-(decorated_definition
-    (decorator)+ @sig.decorator
-)
-</file>
-
-<file path="server.py">
-"""MCP Symbol Edit Server - Symbol-based code editing."""
-
-def doit():
-    return 42
-
-if __name__ == "__main__":
-    main()
-</file>
-</files>
-#+end_src
-
 ** llm/cart.md
 #+begin_src markdown
 # Cart App - Shopping Cart and Session Management
@@ -718,6 +677,47 @@ Recalculate at checkout start: checkout/views.py:begin_checkout()
 
 ### "Guest cart lost after login"
 Check merge logic: customers/signals.py:merge_guest_cart_on_login
+#+end_src
+
+** Repomix
+#+begin_src bash
+# Generate with repomix
+for app in src/apps/*; do
+  appname=$(basename $app)
+  repomix --include "$app/**" --style markdown \
+    --output "repomix-$appname.md"
+  claude -p -c "Read @repomix-$appname.md then follow \
+    instructions in @llm/how_to_document_an_app.md and \
+    generate llm/$appname.md"
+done
+#+end_src
+
+#+begin_src xml
+<directory_structure>
+queries/
+  py.scm
+server.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="queries/py.scm">
+(decorated_definition
+    (decorator)+ @sig.decorator
+)
+</file>
+
+<file path="server.py">
+"""MCP Symbol Edit Server - Symbol-based code editing."""
+
+def doit():
+    return 42
+
+if __name__ == "__main__":
+    main()
+</file>
+</files>
 #+end_src
 
 ** Cross Cutting Concerns
